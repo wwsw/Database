@@ -3,11 +3,41 @@ if (x = 1) {
   var string = "Hello!";
 }
 
+function ifLoggedIn() {
+  //takes from database user login status
+}
+
+function getName() {
+  var currentID = 1;
+  var currentName = "";
+  currentName += nameCompare(currentID);
+
+  return currentName;
+}
+
+function nameCompare(currentID) {
+
+  //TODO retrieve names and relative IDs from database
+  var names = ["Wendy Wong", "Blah Bleh", "Bleh Blah"];
+  var userIDs = [1, 2, 3];
+  var count = 0;
+
+  //loop through IDs to find relative name
+  while (count < userIDs.length) {
+    if (currentID == userIDs[count]) {
+      return names[count];
+    } else {
+      count++;
+    }
+  }
+}
+
+
 document.write( 
 
 
             '<!--Navigation Bar-->'+
-  '<nav class="navbar navbar-default navbar-fixed-top" role="navigation">'+
+  '<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">'+
   '<div class="container">'+
   '<div class="container-fluid">'+
     '<!-- Brand and toggle get grouped for better mobile display -->'+
@@ -26,7 +56,15 @@ document.write(
     '<!-- Collect the nav links, forms, and other content for toggling -->'+
     '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">'+
       '<ul class="nav navbar-nav">'+
-        '<li class="active"><a href="profile.html">Profile</a></li>'+
+
+      //checking if there is a user logged in
+
+
+        '<li class="active"><a href="profile.html">'+
+        getName() +
+        '</a></li>'+
+
+
         '<li><a href="#">Link</a></li>'+
         '<li class="dropdown">'+
           '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>'+

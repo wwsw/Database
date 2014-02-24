@@ -20,8 +20,7 @@
 			$passwordCheck=mysql_fetch_array($password);
 			
        		if($passwordCheck){
-       			echo "hello!";
-       			//$user=mysql_query("SELECT U.user_name FROM User U, Account A WHERE U.user_id=A.user_id");     		
+       			header("Location: http://localhost:8888/profile.html");  		
         	}
         	else{
         		echo "The password is not correct!";
@@ -30,7 +29,7 @@
 		}
 
 		else{
-			header("Location: http://localhost:8888/GC06/register.html");
+			header("Location: http://localhost:8888/register.html");
 		}
 	}
 
