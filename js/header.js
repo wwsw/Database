@@ -1,5 +1,11 @@
-$(document).on('pagecreate', '[data-role="page"]', function createHeader(){ 
-        var headerString = ''+
+var x = 1;
+if (x = 1) {
+  var string = "Hello!";
+}
+
+document.write( 
+
+
             '<!--Navigation Bar-->'+
   '<nav class="navbar navbar-default navbar-fixed-top" role="navigation">'+
   '<div class="container">'+
@@ -12,13 +18,15 @@ $(document).on('pagecreate', '[data-role="page"]', function createHeader(){
         '<span class="icon-bar"></span>'+
         '<span class="icon-bar"></span>'+
       '</button>'+
-      '<a class="navbar-brand" href="#">Website Name</a>'+
+      '<a class="navbar-brand" href="index.html">' + 
+      string +
+      '</a>'+
     '</div>'+
 
     '<!-- Collect the nav links, forms, and other content for toggling -->'+
     '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">'+
       '<ul class="nav navbar-nav">'+
-        '<li class="active"><a href="#">Link</a></li>'+
+        '<li class="active"><a href="profile.html">Profile</a></li>'+
         '<li><a href="#">Link</a></li>'+
         '<li class="dropdown">'+
           '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>'+
@@ -33,12 +41,7 @@ $(document).on('pagecreate', '[data-role="page"]', function createHeader(){
           '</ul>'+
         '</li>'+
       '</ul>'+
-      '<form class="navbar-form navbar-left" role="search">'+
-        '<div class="form-group">'+
-          '<input type="text" class="form-control" placeholder="Search">'+
-        '</div>'+
-        '<button type="submit" class="btn btn-default">Submit</button>'+
-      '</form>'+
+      
       '<ul class="nav navbar-nav navbar-right">'+
         '<li><a href="#">Link</a></li>'+
         '<li class="dropdown">'+
@@ -51,11 +54,21 @@ $(document).on('pagecreate', '[data-role="page"]', function createHeader(){
             '<li><a href="#">Separated link</a></li>'+
           '</ul>'+
         '</li>'+
+
+      '<form class="navbar-form navbar-right" role="search">'+
+        '<div class="form-group">'+
+          '<input type="text" class="form-control" placeholder="Search">'+
+        '</div>'+
+        //'<input type="image" src="img/search.png" width="5%" height="5%" class="btn btn-default">'+
+        '<button type="submit" class="btn btn-default">Submit</button>'+
+      '</form>'+
+
       '</ul>'+
+
+
+
   '</div><!-- /.navbar-collapse -->'+
   '</div><!-- /.container-fluid -->'+
 '</div>'+
-'</nav>';
-        $($(this)).append(headerString);
-});
-
+'</nav>'
+);
