@@ -1,6 +1,6 @@
 var x = 1;
 if (x = 1) {
-  var string = "Hello!";
+  var string = "Hellooooooo!";
 }
 
 function ifLoggedIn() {
@@ -98,7 +98,7 @@ document.write(
           '<input type="text" class="form-control" placeholder="Search">'+
         '</div>'+
         //'<input type="image" src="img/search.png" width="5%" height="5%" class="btn btn-default">'+
-        '<button type="submit" class="btn btn-default">Submit</button>'+
+        '<button type="submit" class="btn btn-default">Search</button>'+
       '</form>'+
 
       '</ul>'+

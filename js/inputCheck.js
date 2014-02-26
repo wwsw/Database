@@ -1,4 +1,4 @@
-function checkName(name) {
+function checkName(text) {
 
 	
 }
