@@ -13,7 +13,7 @@ document.write(
         '<span class="icon-bar"></span>'+
       '</button>'+
       //TODO change this to just index.html for home page
-      '<a class="navbar-brand" href="index.html">Hellooooooo!</a>'+
+      '<a class="navbar-brand" href="../index.html">Hellooooooo!</a>'+
     '</div>'+
 
     '<!-- Collect the nav links, forms, and other content for toggling -->'+
