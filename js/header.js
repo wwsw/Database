@@ -32,6 +32,12 @@ function nameCompare(currentID) {
   }
 }
 
+function notification() {
+
+  var random = Math.floor(Math.random()*11);
+  return random;
+
+}
 
 document.write( 
 
@@ -56,6 +62,7 @@ document.write(
     '<!-- Collect the nav links, forms, and other content for toggling -->'+
     '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">'+
       '<ul class="nav navbar-nav">'+
+      '<li><a href="notifications.html">(' + notification() + ')</a></li>'+
 
       //checking if there is a user logged in
 
@@ -64,32 +71,34 @@ document.write(
         getName() +
         '</a></li>'+
 
-
-        '<li><a href="#">Link</a></li>'+
         '<li class="dropdown">'+
-          '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>'+
+          '<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>'+
           '<ul class="dropdown-menu">'+
-            '<li><a href="#">Action</a></li>'+
-            '<li><a href="#">Another action</a></li>'+
-            '<li><a href="#">Something else here</a></li>'+
+            '<li><a href="friendslist.html">Your Friends</a></li>'+
+            '<li><a href="photos.html">Your Photos</a></li>'+
+            '<li><a href="circles.html">Your Circles</a></li>'+
             '<li class="divider"></li>'+
             '<li><a href="#">Separated link</a></li>'+
             '<li class="divider"></li>'+
             '<li><a href="#">One more separated link</a></li>'+
           '</ul>'+
-        '</li>'+
+        '</li>'+        
+
+
+        '<li><a href="messages.html">Messages ('+ notification() + ')</a></li>'+
+
       '</ul>'+
       
       '<ul class="nav navbar-nav navbar-right">'+
         '<li><a href="#">Link</a></li>'+
         '<li class="dropdown">'+
-          '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>'+
+          '<a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings<b class="caret"></b></a>'+
           '<ul class="dropdown-menu">'+
-            '<li><a href="#">Action</a></li>'+
-            '<li><a href="#">Another action</a></li>'+
+            '<li><a href="editProfile.html">Edit Profile</a></li>'+
+            '<li><a href="#">Option</a></li>'+
             '<li><a href="#">Something else here</a></li>'+
             '<li class="divider"></li>'+
-            '<li><a href="#">Separated link</a></li>'+
+            '<li><a href="logout.html">Logout</a></li>'+
           '</ul>'+
         '</li>'+
 

@@ -52,11 +52,15 @@ table, tr {
   margin-left: 30%;
 }
 
+#column-scroll {
+  overflow: auto;
+}
+
 /**/
 #leftcolumn {
   float: left;
   position: fixed;
-  /*overflow: scroll;*/
+  overflow: auto;
   width: 30%;
   /*border: 1px solid black;
   margin-left: -100%;*/
@@ -86,7 +90,7 @@ table, tr {
     <a class="btn" type="button" class="btn btn-default" style="border-right:1px solid gray" href="friendslist.html">Friends</a>
   </div>
   <div class="btn-group">
-    <a class="btn" type="button" class="btn btn-default" href="cirlces.html">Circles</a>
+    <a class="btn" type="button" class="btn btn-default" href="circles.html">Circles</a>
   </div>
 </div>
 </div>
@@ -126,7 +130,8 @@ table, tr {
 </div>
 </div>
 
-  <div id="contentcolumn" style="overflow: auto;">
+  <div id="contentcolumn">
+    <div id="column-scroll">
 
   <div class="innertube">
     <center>This is the profile page.
@@ -149,6 +154,7 @@ table, tr {
 
   </div>
   </div>
+</div>
 
 </div>
 

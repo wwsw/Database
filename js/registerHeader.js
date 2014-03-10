@@ -20,7 +20,7 @@ document.write(
     '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">'+
       '<ul class="nav navbar-nav">'+
 
-        '<li><a href="html/register.html">Register</a></li>'+
+        '<li><a href="register.html">Register</a></li>'+
       '</ul>'+
       
       '<ul class="nav navbar-nav navbar-right">'+
