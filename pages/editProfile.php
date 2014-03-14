@@ -3,15 +3,15 @@
   <head>
 
 <script type='text/javascript' src='../Libraries/jquery-1.9.1.js'></script>
-<script type='text/javascript' src='../js/header.js'></script>
+<?php
+include "../php/header.php";
+?>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-<link href="../css/bootstrap.css" rel="stylesheet">
-
-    <title>Hellooooooo! - Logout</title>
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <title>Hellooooooo! - Edit Profile</title>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,9 +27,9 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script type='text/javascript' src='../js/bootstrap.min.js'></script>
 
-<div class="page" data-role="page" style="padding-top: 100px">
+<div class="page" data-role="page">
 
-<center>This page is the redirect page for logging out.</center>
+<center>This is the editing profile page.</center>
 
 </div>
 

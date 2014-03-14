@@ -2,9 +2,12 @@
 <head>
 
     <link href="../css/bootstrap.css" rel="stylesheet">
-    <script type='text/javascript' src='../js/registerHeader.js'></script>
     <script type='text/javascript' src='../Libraries/jquery-1.11.0.min.js'></script>
     <script type='text/javascript' src='../js/bootstrap.min.js'></script>
+
+<?php
+include "../php/registerHeader.php";
+?>
 
     
 <title>Hellooooooo!</title>

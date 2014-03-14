@@ -3,7 +3,9 @@
   <head>
 
 <script type='text/javascript' src='../Libraries/jquery-1.9.1.js'></script>
-<script type='text/javascript' src='../js/header.js'></script>
+<?php
+include "../php/header.php";
+?>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,7 +32,7 @@
 <style>
 
 body {
-  padding-top: 70px;
+  padding-top: 60px;
 }
 
 table, tr {
@@ -44,12 +46,14 @@ table, tr {
 }
 
 #contentwrapper {
+  position: absolute;
   float: left;
   width: 100%;
 }
 
 #contentcolumn {
   margin-left: 30%;
+  top: 80px;
 }
 
 #column-scroll {
@@ -72,25 +76,25 @@ table, tr {
 
 .innertube {
   margin: 10px;
-  background-color: #D8D8D8;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 </style>
 
-<div id="profilemenu" style="position: fixed; background-color: white;">
+<div id="profilemenu" style="position: fixed; ">
 <div class="innertube" style="text-align:center;">
 <div class="btn-group btn-group-justified">
   <div class="btn-group">
-    <a class="btn" type="button" class="btn btn-default" style="border-right:1px solid gray" href="about.html">About</a>
+    <a class="btn" type="button" class="btn btn-default" style="border-right:1px solid gray" href="about.php">About</a>
   </div>
   <div class="btn-group">
-    <a class="btn" type="button" class="btn btn-default" style="border-right:1px solid gray" href="photos.html">Photos</a>
+    <a class="btn" type="button" class="btn btn-default" style="border-right:1px solid gray" href="photos.php">Photos</a>
   </div>
   <div class="btn-group">
-    <a class="btn" type="button" class="btn btn-default" style="border-right:1px solid gray" href="friendslist.html">Friends</a>
+    <a class="btn" type="button" class="btn btn-default" style="border-right:1px solid gray" href="friendslist.php">Friends</a>
   </div>
   <div class="btn-group">
-    <a class="btn" type="button" class="btn btn-default" href="circles.html">Circles</a>
+    <a class="btn" type="button" class="btn btn-default" href="circles.php">Circles</a>
   </div>
 </div>
 </div>
@@ -135,7 +139,7 @@ table, tr {
 
   <div class="innertube">
     <center>This is the profile page.
-    <a href="editProfile.html">Update personal details.</a></center>
+    <a href="editProfile.php">Update personal details.</a></center>
 
     <div id="profilefeed">
       <center>This div will contain the feed of the user.

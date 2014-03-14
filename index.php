@@ -3,7 +3,10 @@
   <head>
 
 <script type='text/javascript' src='js/importScript.js'></script>
-<script type='text/javascript' src='js/homeHeader.js'></script>
+
+<?php
+include "php/homeHeader.php";
+?>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,12 +27,29 @@
 
   <body>
 
+<style>
 
+#login {
+  position: absolute;
+  top: 25%;
+  left: 47%;
+  margin-top: -50px;
+  margin-left: -100px;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-bottom: 10px;
+  border-radius: 15px;
+  box-shadow: 3px 3px 6px #888888;
+
+}
+
+</style>
 
 <div class="page" data-role="page">
 
 
-<div class="login" >
+<div class="login" id="login">
 
   <center>
   <form method="post" action="php/login.php" name="login">
@@ -37,9 +57,9 @@
     <div style="text-align:center"><input type="text" name="email" size="30" placeholder="Username" required></div><p>
     <div style="text-align:center"><input type="password" name="password" size="30" placeholder="Password" required></div><br>
 
-  <center><button class="btn btn-lg btn-primary btn-block" type="submit" value="Login" name="login" style="width: 30%">Login</button></center>
+  <center><button class="btn btn-lg btn-primary btn-block" type="submit" value="Login" name="login" style="width: 50%;">Login</button></center>
    <br>
-    <a href="html/register.html">Or Register Here!</a><br>
+    <a href="pages/registerPage.php">Or Register Here!</a><br>
     </p>
 
 

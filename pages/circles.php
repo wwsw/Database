@@ -3,7 +3,9 @@
   <head>
 
 <script type='text/javascript' src='../Libraries/jquery-1.9.1.js'></script>
-<script type='text/javascript' src='../js/header.js'></script>
+<?php
+include "../php/header.php";
+?>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,7 +29,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script type='text/javascript' src='../js/bootstrap.min.js'></script>
 
-<div class="page" data-role="page" style="padding-top: 100px">
+<div class="page" data-role="page">
 
 <center>This is the page to show the user's circles. Another page for friendss' circles?</center>
 

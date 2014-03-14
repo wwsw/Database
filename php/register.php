@@ -12,7 +12,7 @@
 	}
 
 	function profilePage(){
-		window.location.href = "../html/registerProfile.html";
+		window.location.href = "../pages/registerProfile.php";
 	}
 </script>
 

@@ -2,19 +2,42 @@
 <head>
 
     <link href="../css/bootstrap.css" rel="stylesheet">
-    <script type='text/javascript' src='../js/registerHeader.js'></script>
     <script type='text/javascript' src='../Libraries/jquery-1.11.0.min.js'></script>
     <script type='text/javascript' src='../js/bootstrap.min.js'></script>
     <!--script type="text/javascript" src="js/qTipScript.js"></script-->
     <!--script type='text/javascript' src='../Libraries/jquery-1.11.0.min.js'></script-->
     <!--script type 'text/javascript' src='Libraries/combodate/moment.min.2.0.0.js'></script--> 
     <!--script src="../Libraries/combodate/combodate.js"></script--> 
+
+<?php
+include "../php/registerHeader.php";
+?>
     
 <title>Hellooooooo!</title>
 </head>
+
 <body>
 
-<div style="text-align:center;" data-role="content">
+<style>
+
+#register-style {
+  position: absolute;
+  top: 25%;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: -50px;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding-top: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 10px;
+  border-radius: 15px;
+  box-shadow: 3px 3px 6px #888888;
+
+}
+
+</style>
+<div style="text-align:center;" data-role="content" id="register-style">
 
 <div style="padding-left:30px; padding-right:30px;">
 <div class="btn-group btn-group-justified">
@@ -159,7 +182,7 @@
     <!--label style="display:block;text-align:center">Gender:</label>
     <div style="text-align:center"><input type="text" name="gender" size="30"></div>
     <label style="display:block;text-align:center">Age:</label>
-    <div style="text-align:center"><input type="text" name="age" size="30"--></div>
+    <div style="text-align:center"><input type="text" name="age" size="30"--></div-->
 
     <!--label style="display:block;text-align:center">Study:</label>
     <div style="text-align:center"><input type="text" name="study" size="30"></div>
@@ -172,7 +195,7 @@
 
 
 </div>
-
+</div>
 
 </body>
 </html>

@@ -3,7 +3,7 @@
 ?>
 <script type="text/javascript">
 	function homeFeedPage(){
-		window.location.href = "../html/homeFeed.html";
+		window.location.href = "../pages/homeFeed.php";
 	}
 </script>
 
