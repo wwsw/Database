@@ -31,7 +31,118 @@ include "../php/header.php";
 
 <div class="page" data-role="page">
 
-<center>This page will show the messages.</center>
+<style>
+#header {
+    background: #c2c2c2;
+    height: 50px
+}
+
+#wrapper {
+    width: 100%;
+}
+
+#left {
+    background: #d7d7d7;
+    position: absolute; /* IMPORTANT! */
+    width: 25%;
+    height: 100%;
+}
+
+#right {
+    position: relative;
+    width: 70%;
+    background-color: rgba(255, 255, 255, 0.5);
+    float: right;
+    margin-right: 10px;
+}
+
+#sidebar {
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 100%;
+    margin-left: 10px;
+}
+
+.clear {
+    clear: both
+}
+
+#footer {
+    background: #c2c2c2
+}
+
+</style>
+
+<script type="text/javascript">
+$(document).ready(function () {
+
+    var length = $('#left').height() - $('#sidebar').height() + $('#left').offset().top;
+
+    $(window).scroll(function () {
+
+        var scroll = $(this).scrollTop();
+        var height = $('#sidebar').height() + 'px';
+
+        if (scroll < $('#left').offset().top) {
+
+            $('#sidebar').css({
+                'position': 'absolute',
+                'top': '0'
+            });
+
+        } else if (scroll > length) {
+
+            $('#sidebar').css({
+                'position': 'absolute',
+                'bottom': '0',
+                'top': 'auto'
+            });
+
+        } else {
+
+            $('#sidebar').css({
+                'position': 'fixed',
+                'top': '0',
+                'height': height
+            });
+        }
+    });
+});
+
+</script>
+
+<div id="wrapper">
+
+  <div id="left">
+
+    <div id="sidebar">
+
+      Sidebar Content<p>
+      Sidebar Content<p>
+      Sidebar Content<p>
+            Sidebar Content<p>
+    </div>
+
+  </div>
+
+  <div id="right">
+
+    This is the text of the main part of the page. fjdgjoidfjigjiojiojio
+            <script>
+        var string = "";
+          for (var i = 0; i < 50; i++) {
+            string += "blah blah<p>"
+          }
+
+          document.write(string);
+        </script>
+
+  </div>
+
+  <div class="clear"></div>
+
+</div>
+
+
 
 </div>
 

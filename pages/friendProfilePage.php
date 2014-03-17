@@ -43,7 +43,6 @@ table, tr {
 #maincontainer {
   width: 100%;
   margin: 0 auto;
-
 }
 
 #contentwrapper {
@@ -54,12 +53,11 @@ table, tr {
 
 #contentcolumn {
   margin-left: 30%;
-  position: float;
   top: 80px;
 }
 
 #column-scroll {
-  overflow-y: scroll;
+  overflow: auto;
 }
 
 /**/

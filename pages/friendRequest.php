@@ -13,7 +13,7 @@ include "../php/header.php";
     
 <link href="../css/bootstrap.css" rel="stylesheet">
 
-    <title>Hellooooooo! - Search Results</title>
+    <title>Hellooooooo! - Friend Requests</title>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,10 +22,6 @@ include "../php/header.php";
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<style>
-
-
-</style>
 
   </head>
   <body>
@@ -36,41 +32,15 @@ include "../php/header.php";
 
 <div class="page" data-role="page">
 
-<div style="margin-left: 30%; margin-right:30%"><h2>Search Results</h2></div>
+<div style="margin-left: 30%;"><h2>Pending Requests</h2></div>
 
-<!--Entire list-->
+<!--Entire list: uses same layout as search result-->
 <div id="search-result-list">
-  <table>
 
-<script type="text/javascript">
-
-var names = ['Wendy Wong', 'Blah Bleh', 'Bleh Blah', 'Blah Blah', 'Meeeeeh'];
-var work = ['Student', 'Student', 'Google', 'Apple', 'Amazon'];
-var study = ['UCL', 'KCL', 'RHUL', 'QMUL', 'SOAS'];
-var br = '<br>';
-var append = '';
-var count = 0;
-
-while (count < 5) {
-  append += '<tr><td>';
-  append += '<div class="profile-box" id="search-result">';
-  append += '<div id="box-displaypic"><img src="../img/profileimg.png" width=90px></div>';
-  append += '<div id="box-text">';
-  append += '<a href="http://google.co.uk">Google</a>' + br + work[count] + br + study[count] + br;
-  append += '<a href="http://google.co.uk"><button class="btn" id="box-button" type="button">View Profile!</button></a>';
-  append += '</div></div>';
-  append += '</td></tr>';
-
-  count++;
-}
-
-  document.write(append);
-</script>    
-
-  </table>
+<table>
 
   <!--each seperate profile box-->
-<!--   <div class="profile-box" id="search-result">
+  <!--div class="profile-box" id="search-result">
 
     <!-- Separate div to display dp on left-->
     <!--div id="box-displaypic">
@@ -92,11 +62,39 @@ while (count < 5) {
         This is for the user's place of study.
       </div>
 
-      <button class="btn" id="box-button" type="button">View Profile!</button>
+      <button class="btn" id="box-button" type="button">Accept</button>
+      <button class="btn" id="box-button" type="button">Decline</button>
 
     </div>
-  </div> -->
+  </div-->
 
+
+<script type="text/javascript">
+
+var names = ['Wendy Wong', 'Blah Bleh', 'Bleh Blah', 'Blah Blah', 'Meeeeeh'];
+var work = ['Student', 'Student', 'Google', 'Apple', 'Amazon'];
+var study = ['UCL', 'KCL', 'RHUL', 'QMUL', 'SOAS'];
+var br = '<br>';
+var append = '';
+var count = 0;
+
+while (count < 5) {
+  append += '<tr><td>';
+  append += '<div class="profile-box" id="search-result">';
+  append += '<div id="box-displaypic"><img src="../img/profileimg.png" width=30%></div>';
+  append += '<div id="box-text">';
+  append += names[count] + br + work[count] + br + study[count] + br;
+  append += '<button class="btn" id="box-button" type="button" name="Accept">Accept</button> <button class="btn" id="box-button" type="button">Decline</button>';
+  append += '</div></div>';
+  append += '</td></tr>';
+
+  count++;
+}
+
+  document.write(append);
+</script>
+
+</table>
   <p>
 
   <!--div class="profile-box" id="search-result">

@@ -5783,3 +5783,53 @@ body {
   padding-top: 70px;
   background-color: #D8D8D8;
 }
+
+/*Search results and friend request boxes*/
+#search-result{
+
+}
+
+#box-displaypic {
+  position: absolute;
+}
+
+#box-text {
+  margin-left: 105px;
+
+}
+
+#box-name {
+
+}
+
+#box-work {
+
+}
+
+#box-study {
+
+}
+
+#box-button {
+}
+
+#search-result-list {
+  position: relative;
+  top: 0;
+  left: 30%;
+
+}
+
+.profile-box {
+
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 400px;
+  padding-left: 15px;
+  padding-right: 30px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 6px #888888;
+  margin-bottom: 20px;
+
+}
