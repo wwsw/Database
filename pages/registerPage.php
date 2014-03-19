@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 
@@ -48,24 +47,22 @@ include "../php/registerHeader.php";
   <div class="btn-group">
     <button type="button" class="btn btn-default" disabled>2. Profile Details</button>
   </div>
-  <div class="btn-group">
-    <button type="button" class="btn btn-default" disabled>3. Confirmation</button>
-  </div>
 </div>
 </div>
 
 <p>
 
-	<form method="post" action="../php/register.php" name="registration">
+  <form method="post" action="../php/register.php" name="registration">
 
-	<h3 style="text-align:center;"><font color="gray">1. Create Account</font></h3> <p>
+  <h3 style="text-align:center;"><font color="gray">1. Create Account</font></h3> <p>
 
     <!--label style="display:block;text-align:center">First name:</label-->
 
     <!-- Name Input -->
     <!-- class="form-control" -->
     <div class="row">
-        <input type="text" name="firstname" placeholder="First Name" required>  <input type="text" name="surname" size="20" placeholder="Surname" required><p>
+        <input type="text" name="firstname" placeholder="First Name" required>
+        <input type="text" name="surname" size="20" placeholder="Surname" required><p>
     </div>
 
     <div>
@@ -190,8 +187,8 @@ include "../php/registerHeader.php";
     <label style="display:block;text-align:center">Work:</label>
     <div style="text-align:center"><input type="text" name="work" size="30"></div-->
     <br>
-	<center><input class="btn btn-lg btn-primary btn-block" type="submit" value="Next" name="register" style="width: 20%;"></center></p>
-	</form>
+  <center><input class="btn btn-lg btn-primary btn-block" type="submit" value="Next" name="register" style="width: 20%;"></center></p>
+  </form>
 
 
 

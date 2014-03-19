@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 
@@ -25,15 +24,12 @@ include "../php/registerHeader.php";
   <div class="btn-group">
     <button type="button" class="btn btn-default" style="background-color: #D8D8D8;"><b>2. Profile Details</b></button>
   </div>
-  <div class="btn-group">
-    <button type="button" class="btn btn-default" disabled>3. Confirmation</button>
-  </div>
 </div>
 </div>
 
 <p>
     <!--TODO change when creating new edit profile page-->
-	<form method="post" action="../php/profile.php" name="registration">
+	<form method="post" action="../php/profileUpdate.php" name="registration">
 
 	<h3 style="text-align:center;"><font color="gray">2. Create Profile</font></h3> <p>
 
@@ -42,10 +38,10 @@ include "../php/registerHeader.php";
     <!-- Name Input -->
     <!-- class="form-control" -->
     <div class="row">
-        <input type="text" name="study" placeholder="Study" required>  <input type="text" name="work" size="20" placeholder="Work" required><p>
+        <input type="text" name="study" placeholder="Study" required>
+        <input type="text" name="work" size="20" placeholder="Work" required>
+        <p>
     </div>
-    
-
     <!--label style="display:block;text-align:center">Gender:</label>
     <div style="text-align:center"><input type="text" name="gender" size="30"></div>
     <label style="display:block;text-align:center">Age:</label>
@@ -56,7 +52,12 @@ include "../php/registerHeader.php";
     <label style="display:block;text-align:center">Work:</label>
     <div style="text-align:center"><input type="text" name="work" size="30"></div-->
     <br>
-	<center><input class="btn btn-lg btn-primary btn-block" type="submit" value="Next (Nearly There!)" name="register" style="width: 30%;"></center></p>
+	<center>
+    <input class="btn btn-lg btn-primary btn-block" type="submit" value="Next (Nearly There!)" name="register" style="width: 30%;">
+    <br>
+    <a href="homeFeed.php">Or skip</a>
+  </center>
+  </p>
 	</form>
 
 

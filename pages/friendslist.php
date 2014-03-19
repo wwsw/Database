@@ -29,27 +29,37 @@ include "../php/header.php";
 
 <div class="page" data-role="page">
 
-<center>This is the user's friend list. Seperate page or same page for friends' friends lists?</center>
-
-<div id="search-result-list">
+<div id="friend-result-list">
 <table>
 <?php
-$name = array("Wendy", "Leo", "Blah", "Bleh", "Meeeh");
-$work = array("Student", "Student", "Google", "Student", "Blah Blah");
-$study = array("UCL", "KCL", "RHUL", "UCL", "UCL");
+$name = array("Wendy", "Leo", "Blah", "Bleh", "Meeeh", "Booo");
+$work = array("Student", "Student", "Google", "Student", "Blah Blah", "Boooo!");
+$study = array("UCL", "KCL", "RHUL", "UCL", "UCL", "Boo");
 $frndtotal = count($name);
 $br = "<br>";
-$i = 0;
 
 #if greater than 0, and odd number
 if (($frndtotal > 0) && (($frndtotal%2) != 0)) {
   
 
   #up to the max even number
-  while ($i < $frndtotal)) { 
-    echo "<tr>";
-    #echos two columns
-    for ($j = 0; $j < 2; $j++) {
+  for ($i = 0; $i < $frndtotal; $i++) { 
+ 
+    
+    if ($i == $frndtotal) { #if last item
+
+      echo "<tr><td>";
+      echo "<div class='profile-box' id='search-result'>";
+      echo "<div id='box-displaypic'><img src='../img/profileimg.png' width=30%></div>";
+      echo "<div id='box-text'>";
+      echo $name[$frndtotal] . $br . $work[$frndtotal] . $br . $study[$frndtotal] . $br;
+      echo "<a href='friendProfilePage.php'><button class='btn' id='box-button' type='button' name='Accept'>View Profile</button></a>";
+      echo "</div></div>";
+      echo '</td></tr>';
+
+    } elseif (($i == 0) || (($i%2) == 0)) {  # if 0 (1st item), even
+
+      echo "<tr>";
       echo "<td>";
       echo "<div class='profile-box' id='search-result'>";
       echo "<div id='box-displaypic'><img src='../img/profileimg.png' width=30%></div>";
@@ -58,25 +68,52 @@ if (($frndtotal > 0) && (($frndtotal%2) != 0)) {
       echo "<a href='friendProfilePage.php'><button class='btn' id='box-button' type='button' name='Accept'>View Profile</button></a>";
       echo "</div></div>";
       echo '</td>';
-      #increments $i so that next array pointer = $i+1
-      $i++;
+
+    } elseif (($i%2) != 0) { #if even: right side
+      echo "<td>";
+      echo "<div class='profile-box' id='search-result'>";
+      echo "<div id='box-displaypic'><img src='../img/profileimg.png' width=30%></div>";
+      echo "<div id='box-text'>";
+      echo $name[$i] . $br . $work[$i] . $br . $study[$i] . $br;
+      echo "<a href='friendProfilePage.php'><button class='btn' id='box-button' type='button' name='Accept'>View Profile</button></a>";
+      echo "</div></div>";
+      echo '</td>';
+      echo "</tr>";
     }
-    echo "</tr>";
+  
   }
 
-  echo "<tr><td>";
-  echo "<div class='profile-box' id='search-result'>";
-  echo "<div id='box-displaypic'><img src='../img/profileimg.png' width=30%></div>";
-  echo "<div id='box-text'>";
-  echo $name[$frndtotal] . $br . $work[$frndtotal] . $br . $study[$frndtotal] . $br;
-  echo "<a href='friendProfilePage.php'><button class='btn' id='box-button' type='button' name='Accept'>View Profile</button></a>";
-  echo "</div></div>";
-  echo '</td></tr>';  
-    
+} else {
+
+    for ($i = 0; $i < $frndtotal; $i++) { 
+
+      if (($i == 0) || (($i%2) == 0)) {  # if 0 (1st item), even
+
+      echo "<tr>";
+      echo "<td>";
+      echo "<div class='profile-box' id='search-result'>";
+      echo "<div id='box-displaypic'><img src='../img/profileimg.png' width=30%></div>";
+      echo "<div id='box-text'>";
+      echo $name[$i] . $br . $work[$i] . $br . $study[$i] . $br;
+      echo "<a href='friendProfilePage.php'><button class='btn' id='box-button' type='button' name='Accept'>View Profile</button></a>";
+      echo "</div></div>";
+      echo '</td>';
+
+    } elseif (($i%2) != 0) { #if even: right side
+      echo "<td>";
+      echo "<div class='profile-box' id='search-result'>";
+      echo "<div id='box-displaypic'><img src='../img/profileimg.png' width=30%></div>";
+      echo "<div id='box-text'>";
+      echo $name[$i] . $br . $work[$i] . $br . $study[$i] . $br;
+      echo "<a href='friendProfilePage.php'><button class='btn' id='box-button' type='button' name='Accept'>View Profile</button></a>";
+      echo "</div></div>";
+      echo '</td>';
+      echo "</tr>";
+    }
+
+  }
+
 }
-
-#if even
-
 
 
 ?>

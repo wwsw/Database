@@ -22,13 +22,13 @@
       
       <ul class="nav navbar-nav navbar-right">
 
-      <form class="navbar-form navbar-right" role="search">
+      <!--form class="navbar-form navbar-right" role="search">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search">
         </div>
         <!--input type="image" src="img/search.png" width="5%" height="5%" class="btn btn-default"-->
-        <button type="submit" class="btn btn-default">Search</button>
-      </form>
+        <!--button type="submit" class="btn btn-default">Search</button>
+      </form-->
 
       </ul>
 

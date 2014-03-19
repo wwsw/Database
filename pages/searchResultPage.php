@@ -36,13 +36,37 @@ include "../php/header.php";
 
 <div class="page" data-role="page">
 
-<div style="margin-left: 30%; margin-right:30%"><h2>Search Results</h2></div>
+<div style="margin-left: 30%;"><h2>Search Results</h2></div>
 
 <!--Entire list-->
 <div id="search-result-list">
   <table>
+    <?php
+      include "../php/searchResult.php";
 
-<script type="text/javascript">
+      if(mysql_num_rows($search)>0){
+      while($display=mysql_fetch_array($search)){
+
+      echo "<tr><td>";
+      echo "<div class='profile-box' id='search-result'>";
+      echo "<div id='box-displaypic'><img src='../img/profileimg.png' width=90px;></div>";
+      echo "<div id='box-text'>";
+      echo ("<a href='friendProfilePage.php?name=".$display['user_email']."'>".$display['user_firstname']." ".$display['user_surname']."</a><br>");
+      echo "$display[user_work]<br>";
+      echo "$display[user_study]<br>";
+      echo "<a href='friendProfilePage.php?name=".$display['user_email']."'><button class='btn' id='box-button' type='button' >View Profile!</button></a>";
+      echo "</div></div>";
+      echo "</td></tr>";
+    }
+
+  }
+  else{
+    echo "<script>searchFailure();history.back();</script>";
+  }
+
+    ?>
+
+<!--script type="text/javascript">
 
 var names = ['Wendy Wong', 'Blah Bleh', 'Bleh Blah', 'Blah Blah', 'Meeeeeh'];
 var work = ['Student', 'Student', 'Google', 'Apple', 'Amazon'];
@@ -54,10 +78,10 @@ var count = 0;
 while (count < 5) {
   append += '<tr><td>';
   append += '<div class="profile-box" id="search-result">';
-  append += '<div id="box-displaypic"><img src="../img/profileimg.png" width=90px></div>';
+  append += '<div id="box-displaypic"><img src="../img/profileimg.png" width=30%></div>';
   append += '<div id="box-text">';
-  append += '<a href="http://google.co.uk">Google</a>' + br + work[count] + br + study[count] + br;
-  append += '<a href="http://google.co.uk"><button class="btn" id="box-button" type="button">View Profile!</button></a>';
+  append += names[count] + br + work[count] + br + study[count] + br;
+  append += '<button class="btn" id="box-button" type="button">View Profile!</button>';
   append += '</div></div>';
   append += '</td></tr>';
 
@@ -65,7 +89,7 @@ while (count < 5) {
 }
 
   document.write(append);
-</script>    
+</script-->    
 
   </table>
 

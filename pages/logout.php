@@ -23,7 +23,7 @@ include "../php/header.php";
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<meta http-equiv="refresh" content="2;url=../index.html" />
+<meta http-equiv="refresh" content="1;url=../index.php" />
 
   </head>
   <body>

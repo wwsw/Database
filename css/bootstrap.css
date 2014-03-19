@@ -5787,6 +5787,7 @@ body {
 /*Search results and friend request boxes*/
 #search-result{
 
+  margin-left: 10px;
 }
 
 #box-displaypic {
@@ -5817,6 +5818,13 @@ body {
   position: relative;
   top: 0;
   left: 30%;
+
+}
+
+#friend-result-list {
+  position: relative;
+  top: 0;
+  left: 25%;
 
 }
 

@@ -1,5 +1,7 @@
 <?php
-	session_start();
+if(!isset($_SESSION)){
+    session_start();
+}
 ?>
 
 <script type="text/javascript">
@@ -17,16 +19,16 @@
 	include "connection.php";
 
 	$email=mysql_query("SELECT user_email FROM Account WHERE user_email=trim('$_POST[email]')");
-	$emailCheck=mysql_fetch_array($email);
+	$emailFetch=mysql_fetch_array($email);
 
-	if($emailCheck){
+	if($emailFetch){
 		$password=mysql_query("SELECT user_password FROM Account WHERE user_password=md5('$_POST[password]') AND user_email=trim('$_POST[email]')");
-		$passwordCheck=mysql_fetch_array($password);
+		$passwordFetch=mysql_fetch_array($password);
 			
-       	if($passwordCheck){
+       	if($passwordFetch){
 
-       		$_SESSION["email"]=$emailCheck["user_email"];
-       		
+       		$_SESSION["user_email"]=$emailFetch["user_email"];
+       		//setcookie("login",$emailCheck["user_email"],time()+(60*60*24*30));
        		echo "<script>homeFeedPage();</script>"; 			
         }
        	else{

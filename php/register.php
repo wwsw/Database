@@ -1,5 +1,7 @@
 <?php
-	session_start();
+if(!isset($_SESSION)){
+    session_start();
+}
 ?>
 
 <script type="text/javascript">
@@ -28,14 +30,14 @@
 		if($_POST["password1"]==$_POST["password2"]){	
 
 			$userInsertion=mysql_query("INSERT INTO User(user_firstname,user_surname,user_gender,user_birthday)
-			VALUES (trim('$_POST[firstname]'),trim('$_POST[surname]'),'$_POST[gender]','$_POST[year]-$_POST[month]-$_POST[day]')");
+				VALUES (trim('$_POST[firstname]'),trim('$_POST[surname]'),'$_POST[gender]','$_POST[year]-$_POST[month]-$_POST[day]')");
 
 			$getInsertID=mysql_insert_id();
 
 			$accountInsertion=mysql_query("INSERT INTO Account(user_email,user_password,user_id)
-			VALUES (trim('$_POST[email]'),md5('$_POST[password1]'),'$getInsertID')");
+				VALUES (trim('$_POST[email]'),md5('$_POST[password1]'),'$getInsertID')");
 
-			$_SESSION["email"]=trim($_POST["email"]);
+			$_SESSION["user_email"]=trim($_POST["email"]);
 
 			if($userInsertion&&$accountInsertion){
 

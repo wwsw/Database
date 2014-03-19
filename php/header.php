@@ -1,47 +1,3 @@
-<!-- var x = 1;
-if (x = 1) {
-  var string = "Hellooooooo!";
-}
-
-function ifLoggedIn() {
-  //takes from database user login status
-}
-
-function getName() {
-  var currentID = 1;
-  var currentName = "";
-  currentName += nameCompare(currentID);
-
-  return currentName;
-}
-
-function nameCompare(currentID) {
-
-  //TODO retrieve names and relative IDs from database
-  var names = ["Wendy Wong", "Blah Bleh", "Bleh Blah"];
-  var userIDs = [1, 2, 3];
-  var count = 0;
-
-  //loop through IDs to find relative name
-  while (count < userIDs.length) {
-    if (currentID == userIDs[count]) {
-      return names[count];
-    } else {
-      count++;
-    }
-  }
-}
-
-function notification() {
-
-  var random = Math.floor(Math.random()*11);
-  return random;
-
-} -->
-
-
-
-
 <!--Navigation Bar-->
   <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
   <div class="container">
@@ -77,10 +33,16 @@ function notification() {
       </a></li>
 
 
-        <li class="active"><a href="profile.php">
-        <!--USER NAME-->
-        Wendy Wong 
-        </a></li>
+        <li class="active">
+          <?php
+
+            include "userProfile.php";
+
+            echo "<a href='../pages/profile.php'>$userProfileFetch[user_firstname] $userProfileFetch[user_surname]</a>";
+
+          ?>
+
+        </li>
 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
@@ -117,12 +79,12 @@ function notification() {
           </ul>
         </li>
 
-      <form class="navbar-form navbar-right" role="search">
+      <form class="navbar-form navbar-right" role="search" method="post" action="../php/searchContent.php">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
+            <input type="text" class="form-control" name="searchBar" placeholder="Search your friends" required>
+            <button type="submit" class="btn btn-default" value="Search" name="search">Search</button>
         </div>
         <!--input type="image" src="img/search.png" width="5%" height="5%" class="btn btn-default"-->
-        <button type="submit" class="btn btn-default">Search</button>
       </form>
 
       </ul>

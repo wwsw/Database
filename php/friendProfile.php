@@ -26,7 +26,8 @@ if(!isset($_SESSION)){
         WHERE (user=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]')
         AND friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]'))
         OR (user=(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]')
-        AND friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]'))") ;
+        AND friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]'))") 
+        or die("<p>Find relation failed</p>");
 
     $relationNum=mysql_num_rows($relation);
 
@@ -38,7 +39,8 @@ if(!isset($_SESSION)){
 
     $userRequest=mysql_query("SELECT user,friend FROM Friend
               WHERE user=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]')
-              AND friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]')");
+              AND friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]')") 
+              or die("<p>user request failed.</p>");
 
       $userRequestFetch=mysql_fetch_array($userRequest);
 
@@ -50,7 +52,8 @@ if(!isset($_SESSION)){
 
       $friendRequest=mysql_query("SELECT user,friend FROM Friend
                 WHERE user=(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]')
-                AND friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]')");
+                AND friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]')") 
+                or die("<p>Friend request failed</p>");
 
       $friendRequestFetch=mysql_fetch_array($friendRequest);
 
@@ -95,14 +98,12 @@ if(!isset($_SESSION)){
   }
 
   /* The popup window which well display user's/friend's friends. */
-  function friendPopupWindow(){
+  function popupWindow(){
 
     echo '<div id="popupWindow" class="popupWindowStyle">';
       echo '<div>';
-        echo '<div class="closeBar">';
-          echo '<a href="javascript:history.back();" title="Close" class="close">X</a>';
-        echo '</div>';
-        echo '<div class="contentBlock">';
+        echo '<a href="javascript:history.back();" title="Close" class="close">X</a>';
+
         if(view()){
 
           $friendsFriendID=mysql_query("SELECT id FROM FriendsFriend
@@ -135,7 +136,6 @@ if(!isset($_SESSION)){
         }
 
     $dropView=mysql_query("DROP VIEW FriendsFriend");
-        echo '</div>';
       echo '</div>';
     echo '</div>';
 
@@ -283,105 +283,3 @@ if(!isset($_SESSION)){
   }
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<script type='text/javascript' src='../Libraries/jquery-1.9.1.js'></script>
-
-<?php
-include "../php/header.php";
-?>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type='text/javascript' src='../js/bootstrap.min.js'></script>
-    <link href="../css/bootstrap.css" rel="stylesheet">
-    <link href="../css/popupWindow.css" rel="stylesheet">    
-    <title>Hellooooooo!</title>
-
-</head>
-<body>
-
-<style>
-
-body {
-  padding-top: 60px;
-}
-
-table, tr {
-  /*border: 1px solid black;*/
-  width: 100%
-}
-
-#maincontainer {
-  width: 100%;
-  margin: 0 auto;
-}
-
-#contentwrapper {
-  position: absolute;
-  float: left;
-  width: 100%;
-}
-
-#contentcolumn {
-  margin-left: 30%;
-  top: 80px;
-}
-
-#column-scroll {
-  overflow: auto;
-}
-
-/**/
-#leftcolumn {
-  float: left;
-  position: fixed;
-  overflow: auto;
-  width: 30%;
-  /*border: 1px solid black;
-  margin-left: -100%;*/
-  /*background: #C8FC98;*/
-}
-
-#username {
-}
-
-.innertube {
-  margin: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-</style>
-
-<?php
-    include "../php/connection.php";
-
-    if(relation()==2){
-      friendPopupWindow();
-      echoNavigationBar();
-      echo '<div class="page" id="maincontainer" data-role="page" style="padding-top:50px;">';
-      echo '<div id="contentwrapper">';
-
-      echoSideBar();
-      echoFeed();
-
-      echo '</div>';
-      echo '</div>';
-    }
-    else{
-        echo '<div class="page" id="maincontainer" data-role="page" style="padding-top:50px;">';
-        echo '<div id="contentwrapper">';
-
-        echoSideBar();
-        echoBlankFeed();
-
-        echo '</div>';
-        echo '</div>';
-    }
-
-?>
-
-</body>
-</html>

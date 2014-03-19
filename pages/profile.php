@@ -13,6 +13,7 @@ include "../php/header.php";
 
         <!-- Bootstrap -->
     <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/friendProfilePage.css" rel="stylesheet">
     <title>Hellooooooo!</title>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -43,7 +44,6 @@ table, tr {
 #maincontainer {
   width: 100%;
   margin: 0 auto;
-
 }
 
 #contentwrapper {
@@ -54,12 +54,11 @@ table, tr {
 
 #contentcolumn {
   margin-left: 30%;
-  position: float;
   top: 80px;
 }
 
 #column-scroll {
-  overflow-y: scroll;
+  overflow: auto;
 }
 
 /**/
@@ -74,6 +73,7 @@ table, tr {
 }
 
 #username {
+  text-indent: 10px;
 }
 
 .innertube {
@@ -112,7 +112,11 @@ table, tr {
 <table>
   <tr id="username">
     <th>
-      Profile name
+      <?php
+
+        echo "$userProfileFetch[user_firstname] $userProfileFetch[user_surname]";
+
+      ?>
     </th>
 
   </tr>
@@ -124,10 +128,14 @@ table, tr {
 
   <tr>
     <td height=250px>
-      Profile details?<br>
-      Birthday<br>
-      Gender<br>
-      Etc.<br>
+      <?php
+
+        echo "$userProfileFetch[user_birthday]</br>";
+        echo "$userProfileFetch[user_gender]</br>";
+        echo "$userProfileFetch[user_study]</br>";
+        echo "$userProfileFetch[user_work]</br>";
+
+      ?>
     </td>
   </tr>
 
