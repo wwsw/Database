@@ -57,104 +57,22 @@ include "../php/header.php";
       echo "$display[user_study]<br>";
       echo "<a href='friendProfilePage.php?name=".$display['user_email']."'><button class='btn' id='box-button' type='button' >View Profile!</button></a>";
       echo "</div></div>";
-      echo "</div>"
+      echo "</div>";
       echo "</td></tr>";
     }
 
   }
   else{
-    echo "<script>searchFailure();history.back();</script>";
+    $message="No such results!";
+    echo "<script type='text/javascript'>alert('".$message."');history.back();</script>";
   }
 
     ?>
 
-<!--script type="text/javascript">
-
-var names = ['Wendy Wong', 'Blah Bleh', 'Bleh Blah', 'Blah Blah', 'Meeeeeh'];
-var work = ['Student', 'Student', 'Google', 'Apple', 'Amazon'];
-var study = ['UCL', 'KCL', 'RHUL', 'QMUL', 'SOAS'];
-var br = '<br>';
-var append = '';
-var count = 0;
-
-while (count < 5) {
-  append += '<tr><td>';
-  append += '<div class="profile-box" id="search-result">';
-  append += '<div id="box-displaypic"><img src="../img/profileimg.png" width=30%></div>';
-  append += '<div id="box-text">';
-  append += names[count] + br + work[count] + br + study[count] + br;
-  append += '<button class="btn" id="box-button" type="button">View Profile!</button>';
-  append += '</div></div>';
-  append += '</td></tr>';
-
-  count++;
-}
-
-  document.write(append);
-</script-->    
-
   </table>
-
-  <!--each seperate profile box-->
-<!--   <div class="profile-box" id="search-result">
-
-    <!-- Separate div to display dp on left-->
-    <!--div id="box-displaypic">
-      <img src="../img/profileimg.png" width=30%>
-    </div>
-
-    <!--Separate div for text on right-->
-    <!--div id="box-text">
-
-      <div id="box-name">
-        This is for the user's name.
-      </div>
-
-      <div id="box-work">
-        This is for the user's work place.
-      </div>
-
-      <div id="box-study">
-        This is for the user's place of study.
-      </div>
-
-      <button class="btn" id="box-button" type="button">View Profile!</button>
-
-    </div>
-  </div> -->
-
-  <p>
-
-  <!--div class="profile-box" id="search-result">
-
-    <div id="box-displaypic">
-      <img src="../img/profileimg.png" width=30%>
-    </div>
-
-    <div id="box-text">
-      <div id="box-name">
-        This is for the user's name.
-      </div>
-
-      <div id="box-work">
-        This is for the user's work place.
-      </div>
-
-      <div id="box-study">
-        This is for the user's place of study.
-      </div>
-
-      <button class="btn" id="box-button" type="button">View Profile!</button>
-
-    </div-->
-
   </div>
-
-
+</div>
 </div>
 
-</div>
-
-
-  </body>
+</body>
 </html>

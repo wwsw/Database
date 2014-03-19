@@ -46,7 +46,7 @@
   }
 
   function echoNavigationBar(){
-    echo '<div id="profilemenu" style="position: fixed; ">';
+    echo '<div id="profilemenu">';
       echo '<div class="innertube" style="text-align:center;">';
         echo '<div class="btn-group btn-group-justified">';
           echo '<div class="btn-group">';
@@ -101,39 +101,7 @@
         echo '<div class="closeBar">';
           echo '<a href="javascript:history.back();" title="Close" class="close">X</a>';
         echo '</div>';
-        echo '<div class="contentBlock">';
-        if(view()){
-
-          $friendsFriendID=mysql_query("SELECT id FROM FriendsFriend
-            GROUP BY id
-            HAVING COUNT(*)=2");
-
-          if(mysql_num_rows($friendsFriendID)>0){
-
-            while($friendsFriendIDFetch=mysql_fetch_array($friendsFriendID)){
-
-              $display=getFriendsFriend($friendsFriendIDFetch["id"]);
-
-              if($display){
-              echo "<center>";
-              echo ("<a href='friendProfilePage.php?name=".$display['user_email']."'>".$display['user_firstname']." ".$display['user_surname']."</a><br>");
-                echo "$display[user_work]<br>";
-                echo "$display[user_study]<br>";
-                echo "<a href='friendProfilePage.php?name=".$display['user_email']."'><button>View Profile!</button></a>";
-              echo "</center>";
-              }
-
-              else{
-                echo "<p>Display error.</p>";
-              }
-            } 
-          }
-          else{
-            echo "<center><p>No friends to display.</p></center>";
-          }
-        }
-
-    $dropView=mysql_query("DROP VIEW FriendsFriend");
+        
         echo '</div>';
       echo '</div>';
     echo '</div>';
@@ -167,7 +135,7 @@ include "../php/header.php";
 <?php
 
   echoNavigationBar();
-  echo '<div class="page" id="maincontainer" data-role="page" style="padding-top:50px;">';
+  echo '<div class="page" id="maincontainer" data-role="page">';
   echo '<div id="contentwrapper">';
 
   echoSideBar();

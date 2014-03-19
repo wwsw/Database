@@ -14,7 +14,7 @@ table, tr {
 }
 
 #contentwrapper {
-  position: absolute;
+
   float: left;
   width: 100%;
 }
@@ -22,17 +22,16 @@ table, tr {
 #contentcolumn {
   margin-left: 30%;
   position: float;
-  top: 80px;
+  
 }
 
 #column-scroll {
-  overflow-y: scroll;
 }
 
 /**/
 #leftcolumn {
   float: left;
-  position: fixed;
+
   overflow: auto;
   width: 30%;
   /*border: 1px solid black;

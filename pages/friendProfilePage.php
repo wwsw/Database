@@ -272,7 +272,7 @@ if(!isset($_SESSION)){
   }
 
   function echoNavigationBar(){
-    echo '<div id="profilemenu" style="position: fixed; ">';
+    echo '<div id="profilemenu">';
       echo '<div class="innertube" style="text-align:center;">';
         echo '<div class="btn-group btn-group-justified">';
           echo '<div class="btn-group">';
@@ -381,7 +381,7 @@ include "../php/header.php";
     if(relation()==2){
       friendPopupWindow();
       echoNavigationBar();
-      echo '<div class="page" id="maincontainer" data-role="page" style="padding-top:50px;">';
+      echo '<div class="page" id="maincontainer" data-role="page">';
       echo '<div id="contentwrapper">';
 
       echoSideBar();
@@ -391,7 +391,7 @@ include "../php/header.php";
       echo '</div>';
     }
     else{
-        echo '<div class="page" id="maincontainer" data-role="page" style="padding-top:50px;">';
+        echo '<div class="page" id="maincontainer" data-role="page">';
         echo '<div id="contentwrapper">';
 
         echoSideBar();

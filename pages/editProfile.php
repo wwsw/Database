@@ -30,10 +30,26 @@
     <h3><font color="gray">Edit Profile</font></h3>
   <form method="post" action="../php/profileUpdate.php" name="updateProfile" enctype="multipart/form-data">
 
-    <div class="row">
-        <input type="text" name="firstname" value="<?= $userProfileFetch['user_firstname'] ?>">
-        <input type="text" name="surname" size="20" value="<?= $userProfileFetch['user_surname'] ?>"><p>
-    </div>
+    <table>
+        <tr>
+          <td style="text-align: right; padding-right: 7px;">
+            First Name:
+          </td>
+          <td>
+            <input type="text" name="firstname" value="<?= $userProfileFetch['user_firstname'] ?>"><p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="text-align: right; padding-right: 7px;">
+            Surname: 
+          </td>
+          <td>
+            <input type="text" name="surname" size="20" value="<?= $userProfileFetch['user_surname'] ?>"><p>
+          </td>
+        </tr>       
+
+    </table>
 
     <div>
       <?php
@@ -48,7 +64,7 @@
       ?>
     </div>
 
-    <p>Date of birth:</p>
+    
       <div id="dob">
         <script> 
         function yearList() {
@@ -108,7 +124,7 @@
         } 
 
             
-        document.getElementById("dob").innerHTML=yearList() + monthList() + dayList();
+        document.getElementById("dob").innerHTML= "Date of Birth: " + yearList() + monthList() + dayList();
 
         </script>
       </div>
