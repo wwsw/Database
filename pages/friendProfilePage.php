@@ -57,6 +57,17 @@ if(!isset($_SESSION)){
       return $friendRequestFetch;;
   }
 
+  function echoBlock($num,$firstname,$surname,$work,$study,$email,$br){
+
+    echo "<div class='profile-box'>";
+    echo "<div id='box-displaypic'><img src='../img/profileimg.png' width=90px></div>";
+    echo "<div id='box-text'>";
+    echo "<a href='friendProfilePage.php?name=".$email[$num]."'>". $firstname[$num]. " " . $surname[$num] . "</a><br>";
+    echo $work[$num] . $br . $study[$num] . $br;
+    echo "<a href='friendProfilePage.php?name=".$email[$num]."'><button class='btn' id='box-button' type='button' name='Accept'>View Profile</button></a>";
+    echo "</div></div>";
+
+  }
   /* To see that what circle the friend belong to. */
   function getCircle(){
 
@@ -111,26 +122,84 @@ if(!isset($_SESSION)){
 
           if(mysql_num_rows($friendsFriendID)>0){
 
+              $firstname=array();
+              $surname=array();
+              $work=array();
+              $study=array();
+              $email=array();
+
             while($friendsFriendIDFetch=mysql_fetch_array($friendsFriendID)){
 
               $display=getFriendsFriend($friendsFriendIDFetch["id"]);
 
-              if($display){
-              echo "<center>";
-              echo ("<a href='friendProfilePage.php?name=".$display['user_email']."'>".$display['user_firstname']." ".$display['user_surname']."</a><br>");
-                echo "$display[user_work]<br>";
-                echo "$display[user_study]<br>";
-                echo "<a href='friendProfilePage.php?name=".$display['user_email']."'><button>View Profile!</button></a>";
-              echo "</center>";
-              }
+                if($display){
 
-              else{
-                echo "<p>Display error.</p>";
+                $firstname[]=$display["user_firstname"];
+                $surname[]=$display["user_surname"];
+                $work[]=$display["user_work"];
+                $study[]=$display["user_study"];
+                $email[]=$display["user_email"];
               }
-            } 
+            }
+                
+                echo '<div id="friend-result-list">';
+                echo '<table>';
+
+                $frndtotal = count($email);
+                $br = "<br>";
+                
+                #if greater than 0, and odd number
+                if (($frndtotal > 0) && (($frndtotal%2) != 0)) {
+                  #up to the max even number
+                  for ($i = 0; $i < $frndtotal; $i++) { 
+
+                    if ($i == $frndtotal) { #if last item
+                      echo "<tr><td>";
+                      echoBlock($frndtotal,$firstname,$surname,$work,$study,$email,$br);
+                      echo '</td></tr>';
+
+                    } elseif (($i == 0) || (($i%2) == 0)) {  # if 0 (1st item), even
+
+                      echo "<tr>";
+                      echo "<td>";
+                      echoBlock($i,$firstname,$surname,$work,$study,$email,$br);
+                      echo '</td>';
+
+                    } elseif (($i%2) != 0) { #if even: right side
+                      echo "<td>";
+                      echoBlock($i,$firstname,$surname,$work,$study,$email,$br);
+                      echo '</td>';
+                      echo "</tr>";
+                    }
+                  
+                  }
+
+                } else {
+
+                    for ($i = 0; $i < $frndtotal; $i++) { 
+
+                      if (($i == 0) || (($i%2) == 0)) {  # if 0 (1st item), even
+
+                      echo "<tr>";
+                      echo "<td>";
+                      echoBlock($i,$firstname,$surname,$work,$study,$email,$br);
+                      echo '</td>';
+
+                    } elseif (($i%2) != 0) { #if even: right side
+                      echo "<td>";
+                      echoBlock($i,$firstname,$surname,$work,$study,$email,$br);
+                      echo '</td>';
+                      echo "</tr>";
+                      }
+
+                    }
+
+                  }
+                echo '</table>';
+                echo '</div>';
           }
           else{
-            echo "<p>Your friend has no friends.</p>";
+            echo "<center><p>No friends to display.</p></center>";
           }
         }
 
@@ -146,6 +215,7 @@ if(!isset($_SESSION)){
     $friendFetch=friendFetch();
     echo "<div id='leftcolumn'>";
       echo '<div class="innertube">';
+      echo '<div id="leftcolumn-text>';
         echo '<table>';
           echo '<tr id="username">';
             echo '<th>';
@@ -172,7 +242,7 @@ if(!isset($_SESSION)){
               if(relation()==2){
 
                 echo "<form method='post' action='../php/friendDelete.php'>";
-                echo "<button type='submit'>Unfriend</button>";
+                echo "<button class='btn' id='box-button' type='submit'>Unfriend</button>";
                 echo "</form>";
 
                 // Show the friend's circle.
@@ -198,6 +268,7 @@ if(!isset($_SESSION)){
         echo '</table>';
       echo '</div>';
     echo '</div>';
+    echo '</div>';
   }
 
   function echoNavigationBar(){
@@ -212,9 +283,6 @@ if(!isset($_SESSION)){
           echo '</div>';
           echo '<div class="btn-group">';
             echo '<a class="btn" type="button" class="btn btn-default" style="border-right:1px solid gray" href="#popupWindow">Friends</a>';
-          echo '</div>';
-          echo '<div class="btn-group">';
-            echo '<a class="btn" type="button" class="btn btn-default" href="circles.php">Circles</a>';
           echo '</div>';
         echo '</div>';
       echo '</div>';
@@ -258,19 +326,21 @@ if(!isset($_SESSION)){
             echo '<center>You are not friends.<br>';
 
             if(userRequestFetch()){
-              echo "<button type='button' disabled>Request sent</button>";
+              echo "<button class='btn' id='box-button' type='button' disabled>Request sent</button>";
+              echo "<p>";
             } 
             else{
               if(friendRequestFetch()){
                 echo "<p>$friendFetch[user_firstname] $friendFetch[user_surname] has sent you a request.</p>";
                 echo "<form method='post' action='../php/friendAcceptance.php'>";
-                echo "<button type='submit' name='confirm'>Confirm</button>";
-                echo "<button type='submit' name='reject'>Reject</button>";
+                echo "<button class='btn' id='box-button' type='submit' name='confirm'>Confirm</button>";
+                echo "<button class='btn' id='box-button' type='submit' name='reject'>Reject</button>";
                 echo "</form>";
             }
               else{
-                echo "<form method='post' action='../php/friendRequest.php'>";
-                echo "<button type='submit'>Request</button>";
+                echo "<form method='post' action='../php/userRequest.php'>";
+                echo "<button class='btn' id='box-button' type='submit'>Request</button>";
+                echo "<p>";
                 echo "</form>";
               }
             }
@@ -297,63 +367,13 @@ include "../php/header.php";
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type='text/javascript' src='../js/bootstrap.min.js'></script>
     <link href="../css/bootstrap.css" rel="stylesheet">
-    <link href="../css/popupWindow.css" rel="stylesheet">    
+    <link href="../css/popupWindow.css" rel="stylesheet"> 
+    <link href="../css/friendProfilePage.css" rel="stylesheet">   
     <title>Hellooooooo!</title>
 
 </head>
 <body>
 
-<style>
-
-body {
-  padding-top: 60px;
-}
-
-table, tr {
-  /*border: 1px solid black;*/
-  width: 100%
-}
-
-#maincontainer {
-  width: 100%;
-  margin: 0 auto;
-}
-
-#contentwrapper {
-  position: absolute;
-  float: left;
-  width: 100%;
-}
-
-#contentcolumn {
-  margin-left: 30%;
-  top: 80px;
-}
-
-#column-scroll {
-  overflow: auto;
-}
-
-/**/
-#leftcolumn {
-  float: left;
-  position: fixed;
-  overflow: auto;
-  width: 30%;
-  /*border: 1px solid black;
-  margin-left: -100%;*/
-  /*background: #C8FC98;*/
-}
-
-#username {
-}
-
-.innertube {
-  margin: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-</style>
 
 <?php
     include "../php/connection.php";

@@ -20,7 +20,7 @@
 }
 
 .popupWindowStyle > div {
-	width: 50%;
+	width: 80%;
 	height: 80%;
 	position: relative;
 	margin: 5% auto;
@@ -34,7 +34,7 @@
 
 .closeBar{
 	width:80%;
-	height:1%;
+	height:3%;
 	position:relative;
 }
 
@@ -54,7 +54,7 @@
 	background: #ff0000;
 	color: #ff0000;
 	line-height: 25px;
-	right: -31%;
+	right: -29%;
 	text-align: center;
 	top: -15px;
 	width: 24px;

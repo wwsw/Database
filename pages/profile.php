@@ -1,180 +1,181 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-
-<script type='text/javascript' src='../Libraries/jquery-1.9.1.js'></script>
 <?php
-include "../php/header.php";
-?>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  /* The block which displays the user/friend profile page. */
+  function echoSideBar(){
+    include "../php/userProfile.php";
+    echo '<div id="leftcolumn">';
+    echo '<div class="innertube">';
+    echo '<table>';
+      echo '<tr id="username">';
+        echo '<th>';
 
-        <!-- Bootstrap -->
-    <link href="../css/bootstrap.css" rel="stylesheet">
-    <link href="../css/friendProfilePage.css" rel="stylesheet">
-    <title>Hellooooooo!</title>
+          echo "$userProfileFetch[user_firstname] $userProfileFetch[user_surname]";
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+        echo '</th>';
+      echo '</tr>';
 
-  </head>
-  <body>
+      echo '<tr>';
+        echo '<td>';
+        include "../php/profilePhotoSize.php";
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script type='text/javascript' src='../js/bootstrap.min.js'></script>
+        $photoSize=photoSize($_SESSION["user_email"]);
 
-<style>
+         if($photoSize>0){
+           echo '<center><img src="../php/userPhoto.php" style="padding: 10px;" width=150px></center>';
+         }
+         else{
+           echo '<center><img src="../img/profileimg.png" style="padding: 10px;" width=150px></center>';
+         }
+        echo '</td>';
+      echo '</tr>';
 
-body {
-  padding-top: 60px;
-}
-
-table, tr {
-  /*border: 1px solid black;*/
-  width: 100%
-}
-
-#maincontainer {
-  width: 100%;
-  margin: 0 auto;
-}
-
-#contentwrapper {
-  position: absolute;
-  float: left;
-  width: 100%;
-}
-
-#contentcolumn {
-  margin-left: 30%;
-  top: 80px;
-}
-
-#column-scroll {
-  overflow: auto;
-}
-
-/**/
-#leftcolumn {
-  float: left;
-  position: fixed;
-  overflow: auto;
-  width: 30%;
-  /*border: 1px solid black;
-  margin-left: -100%;*/
-  /*background: #C8FC98;*/
-}
-
-#username {
-  text-indent: 10px;
-}
-
-.innertube {
-  margin: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-</style>
-
-<div id="profilemenu" style="position: fixed; ">
-<div class="innertube" style="text-align:center;">
-<div class="btn-group btn-group-justified">
-  <div class="btn-group">
-    <a class="btn" type="button" class="btn btn-default" style="border-right:1px solid gray" href="about.php">About</a>
-  </div>
-  <div class="btn-group">
-    <a class="btn" type="button" class="btn btn-default" style="border-right:1px solid gray" href="photos.php">Photos</a>
-  </div>
-  <div class="btn-group">
-    <a class="btn" type="button" class="btn btn-default" style="border-right:1px solid gray" href="friendslist.php">Friends</a>
-  </div>
-  <div class="btn-group">
-    <a class="btn" type="button" class="btn btn-default" href="circles.php">Circles</a>
-  </div>
-</div>
-</div>
-</div>
-
-<div class="page" id="maincontainer" data-role="page" style="padding-top:50px;">
-
-<div id="contentwrapper">
-
-<!-- Side Bar -->
-<div id="leftcolumn">
-<div class="innertube">
-<table>
-  <tr id="username">
-    <th>
-      <?php
-
-        echo "$userProfileFetch[user_firstname] $userProfileFetch[user_surname]";
-
-      ?>
-    </th>
-
-  </tr>
-  <tr>
-    <td>
-      <center><img src="../img/profileimg.png" style="padding: 10px;" width=150px></center>
-    </td>
-  </tr>
-
-  <tr>
-    <td height=250px>
-      <?php
-
+      echo '<tr>';
+        echo '<td height=250px>';
+ 
         echo "$userProfileFetch[user_birthday]</br>";
         echo "$userProfileFetch[user_gender]</br>";
         echo "$userProfileFetch[user_study]</br>";
         echo "$userProfileFetch[user_work]</br>";
 
-      ?>
-    </td>
-  </tr>
+        echo '</td>';
+        echo '</tr>';
 
-</table>
+    echo '</table>';
+    echo '</div>';
+    echo '</div>';
+  }
 
-</div>
-</div>
+  function echoNavigationBar(){
+    echo '<div id="profilemenu" style="position: fixed; ">';
+      echo '<div class="innertube" style="text-align:center;">';
+        echo '<div class="btn-group btn-group-justified">';
+          echo '<div class="btn-group">';
+            echo '<a class="btn" type="button" class="btn btn-default" style="border-right:1px solid gray" href="about.php">About</a>';
+          echo '</div>';
+          echo '<div class="btn-group">';
+            echo '<a class="btn" type="button" class="btn btn-default" style="border-right:1px solid gray" href="photos.php">Photos</a>';
+          echo '</div>';
+          echo '<div class="btn-group">';
+            echo '<a class="btn" type="button" class="btn btn-default" style="border-right:1px solid gray" href="#popupWindow">Friends</a>';
+          echo '</div>';
+          echo '<div class="btn-group">';
+            echo '<a class="btn" type="button" class="btn btn-default" href="circles.php">Circles</a>';
+          echo '</div>';
+        echo '</div>';
+      echo '</div>';
+    echo '</div>';
+  }
 
-  <div id="contentcolumn">
-    <div id="column-scroll">
+    /* Display the feed block when they are friends. */
+  function echoFeed(){
+    echo '<div id="contentcolumn">';
+      echo '<div id="column-scroll">';
 
-  <div class="innertube">
-    <center>This is the profile page.
-    <a href="editProfile.php">Update personal details.</a></center>
+        echo '<div class="innertube">';
+          echo '<center>This is the profile page.';
+          echo '<a href="editProfile.php">Update personal details.</a></center>';
 
-    <div id="profilefeed">
-      <center>This div will contain the feed of the user.
+          echo '<div id="profilefeed">';
+            echo '<center>This div will contain the feed of the user.';
 
-        <script>
-        var string = "";
-          for (var i = 0; i < 50; i++) {
-            string += "blah blah<p>"
+              echo '<script>';
+              echo 'var string = "";';
+                echo 'for (var i = 0; i < 50; i++) {';
+                  echo 'string += "blah blah<p>"';
+                  echo '}';
+                echo 'document.write(string);';
+              echo '</script>';
+
+            echo '</center>';
+          echo '</div>';
+        echo '</div>';
+      echo '</div>';
+  echo '</div>';
+  }
+
+  /* The popup window which well display user's/friend's friends. */
+  function friendPopupWindow(){
+
+    echo '<div id="popupWindow" class="popupWindowStyle">';
+      echo '<div>';
+        echo '<div class="closeBar">';
+          echo '<a href="javascript:history.back();" title="Close" class="close">X</a>';
+        echo '</div>';
+        echo '<div class="contentBlock">';
+        if(view()){
+
+          $friendsFriendID=mysql_query("SELECT id FROM FriendsFriend
+            GROUP BY id
+            HAVING COUNT(*)=2");
+
+          if(mysql_num_rows($friendsFriendID)>0){
+
+            while($friendsFriendIDFetch=mysql_fetch_array($friendsFriendID)){
+
+              $display=getFriendsFriend($friendsFriendIDFetch["id"]);
+
+              if($display){
+              echo "<center>";
+              echo ("<a href='friendProfilePage.php?name=".$display['user_email']."'>".$display['user_firstname']." ".$display['user_surname']."</a><br>");
+                echo "$display[user_work]<br>";
+                echo "$display[user_study]<br>";
+                echo "<a href='friendProfilePage.php?name=".$display['user_email']."'><button>View Profile!</button></a>";
+              echo "</center>";
+              }
+
+              else{
+                echo "<p>Display error.</p>";
+              }
+            } 
           }
+          else{
+            echo "<center><p>No friends to display.</p></center>";
+          }
+        }
 
-          document.write(string);
-        </script>
+    $dropView=mysql_query("DROP VIEW FriendsFriend");
+        echo '</div>';
+      echo '</div>';
+    echo '</div>';
 
-      </center>
-    </div>
+  }
+?>
 
-  </div>
-  </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script type='text/javascript' src='../Libraries/jquery-1.9.1.js'></script>
 
-</div>
+<?php
+include "../php/header.php";
+?>
 
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-</div>
+        <!-- Bootstrap -->
+  <link href="../css/bootstrap.css" rel="stylesheet">
+  <link href="../css/friendProfilePage.css" rel="stylesheet">
+  <link href="../css/popupWindow.css" rel="stylesheet"> 
+  <script type='text/javascript' src='../js/bootstrap.min.js'></script>
+  <title>Hellooooooo!</title>
 
+</head>
+<body>
 
-  </body>
+<?php
+
+  echoNavigationBar();
+  echo '<div class="page" id="maincontainer" data-role="page" style="padding-top:50px;">';
+  echo '<div id="contentwrapper">';
+
+  echoSideBar();
+  echoFeed();
+  friendPopupWindow();
+  echo '</div>';
+  echo '</div>';
+
+?>
+</body>
 </html>

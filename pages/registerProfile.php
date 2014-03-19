@@ -14,9 +14,8 @@ include "../php/registerHeader.php";
 </head>
 <body>
 
-<div style="text-align:center;" data-role="content">
+<div style="text-align:center;" data-role="content" id="register-style">
 
-<div style="padding-left:30px; padding-right:30px;">
 <div class="btn-group btn-group-justified">
   <div class="btn-group">
     <button type="button" class="btn btn-default" disabled>1. Create Account</button>
@@ -24,7 +23,6 @@ include "../php/registerHeader.php";
   <div class="btn-group">
     <button type="button" class="btn btn-default" style="background-color: #D8D8D8;"><b>2. Profile Details</b></button>
   </div>
-</div>
 </div>
 
 <p>
@@ -42,25 +40,21 @@ include "../php/registerHeader.php";
         <input type="text" name="work" size="20" placeholder="Work" required>
         <p>
     </div>
-    <!--label style="display:block;text-align:center">Gender:</label>
-    <div style="text-align:center"><input type="text" name="gender" size="30"></div>
-    <label style="display:block;text-align:center">Age:</label>
-    <div style="text-align:center"><input type="text" name="age" size="30"--></div>
 
-    <!--label style="display:block;text-align:center">Study:</label>
-    <div style="text-align:center"><input type="text" name="study" size="30"></div>
-    <label style="display:block;text-align:center">Work:</label>
-    <div style="text-align:center"><input type="text" name="work" size="30"></div-->
-    <br>
+    <center>
+        <p>
+        <p>
+        <font color="gray">Please upload your profile photo</font></p>
+        <input style="width: 17%" type="file" name="photo">
+        <br>
+        </center>
 	<center>
-    <input class="btn btn-lg btn-primary btn-block" type="submit" value="Next (Nearly There!)" name="register" style="width: 30%;">
-    <br>
-    <a href="homeFeed.php">Or skip</a>
-  </center>
+    <input class="btn btn-lg btn-primary btn-block" type="submit" value="Finish!" name="register" style="width: 30%;">
+
   </p>
+    <a href="homeFeed.php">Or skip</a>
+    </center>
 	</form>
-
-
 
 </div>
 

@@ -11,5 +11,5 @@ if(!isset($_SESSION)){
 
     $userProfileFetch=mysql_fetch_array($userProfile);
 
-    mysql_close();
+    mysql_close($connection);
 ?>

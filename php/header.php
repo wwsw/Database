@@ -1,3 +1,8 @@
+<?php
+if(!isset($_SESSION)){
+    session_start();
+}
+?>
 <!--Navigation Bar-->
   <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
   <div class="container">
@@ -18,17 +23,22 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-      <li><a href="notifications.php">
+      <li><a href="friendRequestPage.php">
 
-      <!--Notifications-->
-      <script type="text/javascript">
-        function notification() {
-          var random = Math.floor(Math.random()*11);
-          return random;
-        }
+        <?php
 
-        document.write(notification());
-      </script>
+        include "connection.php";
+
+        $friendRequest=mysql_query("SELECT user FROM Friend
+          WHERE friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]')
+          AND user NOT IN (SELECT friend FROM Friend WHERE user=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]'))");
+
+        $notificationAmount=mysql_num_rows($friendRequest);
+
+        echo $notificationAmount;
+
+        mysql_close($connection);
+        ?>
 
       </a></li>
 
@@ -67,7 +77,6 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings<b class="caret"></b></a>
           <ul class="dropdown-menu">

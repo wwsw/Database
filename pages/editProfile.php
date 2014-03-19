@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
+<html>
+<head>
 
-<script type='text/javascript' src='../Libraries/jquery-1.9.1.js'></script>
+  <script type='text/javascript' src='../Libraries/jquery-1.9.1.js'></script>
 <?php
   include "../php/header.php";
 
@@ -13,19 +12,23 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="../css/bootstrap.css" rel="stylesheet">
-    <script type='text/javascript' src='../js/bootstrap.min.js'></script>
-    <title>Hellooooooo! - Edit Profile</title>
-  </head>
 
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <script type='text/javascript' src='../Libraries/jquery-1.11.0.min.js'></script>
+    <script type='text/javascript' src='../js/bootstrap.min.js'></script>
+
+    
+<title>Hellooooooo! - Edit Profile</title>
+</head>
 <body>
 
-<div class="page" data-role="page">
+<div style="text-align:center;" id="editProfile-style">
+  <div style="padding-left:30px; padding-right:30px;">
   <center>
     <br>
     <br>
     <h3><font color="gray">Edit Profile</font></h3>
-  <form method="post" action="../php/updateProfile.php" name="updateProfile">
+  <form method="post" action="../php/profileUpdate.php" name="updateProfile" enctype="multipart/form-data">
 
     <div class="row">
         <input type="text" name="firstname" value="<?= $userProfileFetch['user_firstname'] ?>">
@@ -36,11 +39,11 @@
       <?php
         if($userProfileFetch["user_gender"]=='Male'){
           echo '<input type="radio" name="gender" value="Male" checked> Male';
-          echo '<input type="radio" name="gender" value="Female"> Female<p>';
+          echo '  <input type="radio" name="gender" value="Female"> Female<p>';
         }
         else{
           echo '<input type="radio" name="gender" value="Male"> Male';
-          echo '<input type="radio" name="gender" value="Female" checked> Female<p>';
+          echo '  <input type="radio" name="gender" value="Female" checked> Female<p>';
         }
       ?>
     </div>
@@ -112,24 +115,49 @@
       <br>
 
       <div class="row">
-        <input type="text" name="study" value="<?= $userProfileFetch['user_study'] ?>" placeholder="Study">
-        <input type="text" name="work" size="20" value="<?= $userProfileFetch['user_work'] ?>" placeholder="Work">
+        <input type="text" name="study" value="<?= $userProfileFetch['user_study'] ?>">
+        <input type="text" name="work" size="20" value="<?= $userProfileFetch['user_work'] ?>">
         <br>
-
      </div>
 
       <br>
-       <input type="password" name="password1" size="30" placeholder="Password"><br>
-        <font color="gray"><i>Passwords must be at least 6 characters long, and contain one or more numbers.</i></font><p>
-      <input type="password" name="password2" size="30" placeholder="Re-enter Password"><p>
+      <p><font color="gray">Please upload your profile photo</font></p>
+      <input type="file" name="photo">
       <br>
+
+<!--ASK FOR CURRENT AS WELL?-->
+      <table>
+
+        <tr>
+          <td style="text-align: right; padding-right: 7px;">
+            New Password:  
+          </td>
+          <td>
+            <input type="password" name="password1" size="30" placeholder="Password"><p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="text-align: right; padding-right: 7px;">
+            Re-enter Password: 
+          </td>
+          <td>
+            <input type="password" name="password2" size="30" placeholder="Re-enter Password"><p>
+          </td>
+        </tr> 
+
+      </table>  
+
+      <font color="gray"><i>Passwords must be at least 6 characters long, and contain one or more numbers. </i></font><p>
+
+      <p>
 
       <input class="btn btn-lg btn-primary btn-block" type="submit" value="Update" name="reditProfile" style="width: 20%;">
 
   </form>
   </center>
 </div>
+</div>
 
-
-  </body>
+</body>
 </html>

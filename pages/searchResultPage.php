@@ -48,7 +48,8 @@ include "../php/header.php";
       while($display=mysql_fetch_array($search)){
 
       echo "<tr><td>";
-      echo "<div class='profile-box' id='search-result'>";
+      echo "<div class='searchResult'>";
+      echo "<div class='profile-box'>";
       echo "<div id='box-displaypic'><img src='../img/profileimg.png' width=90px;></div>";
       echo "<div id='box-text'>";
       echo ("<a href='friendProfilePage.php?name=".$display['user_email']."'>".$display['user_firstname']." ".$display['user_surname']."</a><br>");
@@ -56,6 +57,7 @@ include "../php/header.php";
       echo "$display[user_study]<br>";
       echo "<a href='friendProfilePage.php?name=".$display['user_email']."'><button class='btn' id='box-button' type='button' >View Profile!</button></a>";
       echo "</div></div>";
+      echo "</div>"
       echo "</td></tr>";
     }
 

@@ -4,7 +4,8 @@ body {
 
 table, tr {
   /*border: 1px solid black;*/
-  width: 100%
+  width: 100%;
+
 }
 
 #maincontainer {
@@ -37,6 +38,10 @@ table, tr {
   /*border: 1px solid black;
   margin-left: -100%;*/
   /*background: #C8FC98;*/
+}
+
+#leftcolumn-text {
+
 }
 
 #username {
