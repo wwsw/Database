@@ -10,8 +10,8 @@ if(!isset($_SESSION)){
 	$sendMessage=mysql_query("INSERT INTO Message(sender,receiver, date, message)
 		VALUES (
 
-			(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]'),
-			(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]'),
+			(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_id]'),
+			(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_id]'),
 			now(),
 			'$message'
 
