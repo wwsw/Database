@@ -35,7 +35,12 @@ if(!isset($_SESSION)){
 
         $notificationAmount=mysql_num_rows($friendRequest);
 
-        echo $notificationAmount;
+        ############ NOTIFICATION BADGE ##########
+
+        if ($notificationAmount > 0) {
+          
+          echo "<span class='badge'>" . $notificationAmount . "</span>";
+        }
 
         mysql_close($connection);
         ?>

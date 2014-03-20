@@ -13,6 +13,18 @@ var sendChannel,
     chatWindowMessage = document.querySelector('.chat-window-message'),
     chatThread = document.querySelector('.chat-thread');
 
+
+/**
+ * Gets messages by jQuery Ajax
+ */
+function getMessages() {
+    var message = $('#messageBox').val();
+    $('#messageBox').val('');
+    $.get('/php/sendMessage.php?message='+message, function(data) {
+
+    });
+}
+
 // Create WebRTC connection
 createConnection();
 

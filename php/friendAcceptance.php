@@ -2,7 +2,6 @@
 if(!isset($_SESSION)){
     session_start();
 }
-
 	include "connection.php";
 
 	if(isset($_POST['confirm'])){
@@ -32,5 +31,5 @@ if(!isset($_SESSION)){
 		}
 	}
 
-	mysql_close();
+	mysql_close($connection);
 ?>

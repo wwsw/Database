@@ -17,7 +17,5 @@
 
 	return $imageSize;
 
-	mysql_close();
-
  }
 ?>

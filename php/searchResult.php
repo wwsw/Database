@@ -1,16 +1,8 @@
 <?php
-if(!isset($_SESSION)){
-    session_start();
-}
-?>
-
-<script type="text/javascript">
-	function searchFailure(){
-		alert("No such results!");
+	if(!isset($_SESSION)){
+	    session_start();
 	}
-</script>
 
-<?php
 	include "connection.php";
 
 	$search=mysql_query("SELECT user_firstname,user_surname,user_birthday,user_gender,user_study,user_work,user_email FROM User,Account
