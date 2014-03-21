@@ -7,6 +7,24 @@ if(!isset($_SESSION)){
 
   $_SESSION["friend_id"]=$friendID;
 
+  /* To know that if the user's friend has ever post anything. */
+  function postOrNot(){
+    $postOrNot=mysql_query("SELECT post_id FROM Post WHERE post_id=$_SESSION[friend_id]");
+
+    return $postOrNot;
+  }
+
+  /* Get the post of the user's friend. */
+  function getPost(){
+
+    include "../php/connection.php";
+
+    $getPost=mysql_query("SELECT id,post_id,post_time,post_photo,post_comment,user_firstname,user_surname FROM Post,User
+      WHERE post_id=$_SESSION[friend_id] AND post_id=user_id GROUP BY post_time");
+
+    return $getPost;
+  }
+
   /* Get the information of the friends. */
   function friendFetch(){
 
@@ -102,6 +120,26 @@ if(!isset($_SESSION)){
 
     return $friendsFriendFetch;
 
+  }
+
+  function unfriendPopupWindow(){
+    echo "<div class='unfriend'>";
+      echo '<div id="unfriendConfirmation" class="popupWindowStyle">';
+        echo '<div>';
+          echo '<div class="closeBar">';
+            echo '<a href="javascript:history.back();" title="Close" class="close">X</a>';
+          echo '</div>';
+
+          echo '<div class="contentBlock">';
+          echo "<form method='post' action='../php/friendDelete.php'>";
+            echo "<button class='btn' id='box-button' type='submit' name='cancel' style='width:80px'>Cancel</button>&nbsp;";
+            echo "<button class='btn' id='box-button' type='submit' name='confirm' style='width:80px'>Confirm</button>";
+            echo "</form>";
+          echo '</div>';
+
+        echo '</div>';
+      echo '</div>';
+    echo '</div>';
   }
 
   /* The popup window which well display user's/friend's friends. */
@@ -202,7 +240,8 @@ if(!isset($_SESSION)){
           }
         }
 
-    $dropView=mysql_query("DROP VIEW FriendsFriend");
+        $dropView=mysql_query("DROP VIEW FriendsFriend");
+
         echo '</div>';
       echo '</div>';
     echo '</div>';
@@ -225,8 +264,15 @@ if(!isset($_SESSION)){
           echo '</tr>';
           echo '<tr>';
             echo '<td>';
-              echo '<center><img src="../img/profileimg.png" style="padding: 10px;" width=150px></center>';
-            echo '</td>';
+              $userPhotoSize=userPhotoSize($_SESSION["friend_id"]);
+
+               if($userPhotoSize>0){
+                 echo "<center><img src='../php/profilePhoto.php?id=".$_SESSION["friend_id"]."' style='width:150px; padding:10px;'></center>";
+               }
+               else{
+                 echo '<center><img src="../img/profileimg.png" style="padding: 10px;" width=150px></center>';
+               }
+
           echo '</tr>';
 
           echo '<tr>';
@@ -258,9 +304,9 @@ if(!isset($_SESSION)){
                 echo "<br>";
 
 
-                echo "<form method='post' action='../php/friendDelete.php'>";
-                echo "&nbsp; <button class='btn' id='box-button' type='submit'>Unfriend</button>";
-                echo "</form>";
+                //echo "<form method='post' action='../php/friendDelete.php'>";
+                echo "&nbsp; <a href='#unfriendConfirmation'>Unfriend?</a>";
+                //echo "</form>";
 
               }
               
@@ -295,27 +341,88 @@ if(!isset($_SESSION)){
   function echoFeed(){
     echo '<div id="contentcolumn">';
       echo '<div id="column-scroll">';
-
         echo '<div class="innertube">';
-          echo '<center>This is the profile page.';
-          echo '<a href="editProfile.php">Update personal details.</a></center>';
-
           echo '<div id="profilefeed">';
-            echo '<center>This div will contain the feed of the user.';
+            echo '<center>';
 
-              echo '<script>';
-              echo 'var string = "";';
-                echo 'for (var i = 0; i < 50; i++) {';
-                  echo 'string += "blah blah<p>"';
-                  echo '}';
-                echo 'document.write(string);';
-              echo '</script>';
+            $getPost=getPost();
+            $userPhotoSize=userPhotoSize($_SESSION["friend_id"]);
+              echo "<div class='userProfile' style='margin-left:20ex; margin-top:-30px'>";
+                while($getPostFetch=mysql_fetch_array($getPost)){
 
+                 if($getPostFetch){
+              
+                  echo '<div id="newsFeedBlock">';
+                    echo '<div style="text-align: -webkit-left;">';
+                    
+                      // The div for user_photo
+                      echo '<div class="user_photo">';
+                        if($userPhotoSize>0){
+
+                         echo "<img src='../php/profilePhoto.php?id=".$_SESSION["friend_id"]."' style='width:50px;'>";
+          
+                        }
+                        else{
+                          echo '<img src="../img/profileimg.png" style="width:50px;">';
+
+                        }
+                      echo '</div>';
+
+                      // The div for post details
+                      echo '<div class="post_detail">';
+                        echo '<ul style="list-style:none;">';
+                          // The div for the user's name
+                          echo '<li>';
+                            echo '<div class="user_name">';
+                              echo "<a href='friendProfilePage.php?name=".$getPostFetch["post_id"]."'>". $getPostFetch["user_firstname"]. " " . $getPostFetch["user_surname"] . "</a><br>";
+                            echo '</div>';
+                          echo '</li>';
+
+                          echo '<li style="padding-top:35px;">';
+                            echo '<div class="photoCommentBorder">';
+
+                              // The div for the post photo
+                              echo '<div class="post_photo">';
+                                $photoID=$getPostFetch["id"];
+
+                                $postPhotoSize=postPhotoSize($_SESSION["friend_id"],$photoID);
+                                // If the photo size is bigger than 0, which means there is a photo in the database.
+                                if($postPhotoSize>0){
+                                  echo '<img src="../php/newsFeedPostPhoto.php?userID='.$_SESSION["friend_id"].'&photoID='.$photoID.'" style="width:250px">';
+                                }
+                              echo '</div>';
+
+                            // The div for the post comment
+                              echo '<div class="post_comment">';
+                                echo $getPostFetch["post_comment"];
+                              echo '</div>';
+
+                            echo '</div>';
+                          echo '</li>';
+
+                          // The div for the post time
+                          echo '<li>';
+                            echo '<div class="post_time">';
+                              echo $getPostFetch["post_time"];
+                            echo '</div>';
+                          echo '</li>';
+                        echo '</ul>';
+                      echo '</div>';
+
+                    echo '<div>';
+                  echo '</div>';
+                 }
+                 else{
+                  echo "Something wrong.";
+                 }
+
+                }
+              echo "</div>";
             echo '</center>';
           echo '</div>';
         echo '</div>';
       echo '</div>';
-  echo '</div>';
+    echo '</div>';
   }
 
   /* Display the feed block when the request/confirm button when they are not friends. */
@@ -354,6 +461,20 @@ if(!isset($_SESSION)){
   echo '</div>';
   }
 
+  function echoNoPost(){
+    echo '<div id="contentcolumn">';
+      echo '<div id="column-scroll">';
+
+        echo '<div class="innertube" style="height:317px;">';
+          echo '<center>Your friend did not post anything.';
+
+          echo '<div id="profilefeed">';
+          echo '</div>';
+        echo '</div>';
+      echo '</div>';
+  echo '</div>';
+  }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -369,6 +490,7 @@ include "../php/header.php";
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type='text/javascript' src='../js/bootstrap.min.js'></script>
     <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/feedStyle.css" rel="stylesheet"> 
     <link href="../css/popupWindow.css" rel="stylesheet"> 
     <link href="../css/friendProfilePage.css" rel="stylesheet">   
     <title>Hellooooooo!</title>
@@ -379,18 +501,38 @@ include "../php/header.php";
 
 <?php
     include "../php/connection.php";
+    include "../php/photoSize.php";
     if($_SESSION['user_id']!=$_GET['name']){
       if(relation()==2){
-        friendPopupWindow();
-        echoNavigationBar();
-        echo '<div class="page" id="maincontainer" data-role="page">';
-        echo '<div id="contentwrapper">';
+        $postOrNot=postOrNot();
+        if(mysql_num_rows($postOrNot)>0){
+          friendPopupWindow();
+          echoNavigationBar();
+          unfriendPopupWindow();
+          echo '<div class="page" id="maincontainer" data-role="page">';
+          echo '<div id="contentwrapper">';
 
-        echoSideBar();
-        echoFeed();
+          echoSideBar();
+          echoFeed();
 
-        echo '</div>';
-        echo '</div>';
+          echo '</div>';
+          echo '</div>';
+          
+        }
+        else{
+          friendPopupWindow();         
+          echoNavigationBar();
+          unfriendPopupWindow();
+          echo '<div class="page" id="maincontainer" data-role="page">';
+          echo '<div id="contentwrapper">';
+
+          echoSideBar();
+          echoNoPost();
+
+          echo '</div>';
+          echo '</div>';
+
+        }
       }
       else{
           echo '<div class="page" id="maincontainer" data-role="page">';

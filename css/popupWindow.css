@@ -20,8 +20,8 @@
 }
 
 .popupWindowStyle > div {
-	width: 80%;
-	height: 80%;
+	width: 1000px;
+	height: 500px;
 	position: relative;
 	margin: 5% auto;
 	padding: 5px 20px 13px 20px;
@@ -55,6 +55,61 @@
 	color: #ff0000;
 	line-height: 25px;
 	right: -29%;
+	text-align: center;
+	top: -15px;
+	width: 24px;
+	text-decoration: none;
+	font-weight: bold;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	-moz-box-shadow: 1px 1px 3px #000000;
+	-webkit-box-shadow: 1px 1px 3px #000000;
+	box-shadow: 1px 1px 3px #000000;
+}
+
+.close:hover
+{ background: #ff0000; }
+
+
+.unfriend .popupWindowStyle > div {
+	width: 300px;
+	height: 100px;
+	position: relative;
+	margin: 5% auto;
+	padding: 5px 20px 13px 20px;
+	border-radius: 10px;
+	background: #ffffff;
+	background: -moz-linear-gradient(#ffffff, #999999);
+	background: -webkit-linear-gradient(#ffffff, #999999);
+	background: -o-linear-gradient(#ffffff, #999999);
+}
+
+.unfriend .closeBar{
+	width:80%;
+	height:3%;
+	position:relative;
+}
+
+.unfriend .contentBlock{
+	margin-top: 24px;
+	margin-left: 50px;
+	width:102%;
+	height:100%;
+	position: relative;
+	overflow: auto;
+}
+
+.unfriend .contentBlock::-webkit-scrollbar{
+	width:0;
+}
+
+.unfriend .close {
+	position: absolute;
+	background: #ff0000;
+	color: #ff0000;
+	line-height: 25px;
+	right: -38%;
 	text-align: center;
 	top: -15px;
 	width: 24px;

@@ -66,7 +66,7 @@ include "../php/header.php";
   function getPost($postID){
 
     $getPost=mysql_query("SELECT id,post_id,post_time,post_photo,post_comment,user_firstname,user_surname FROM Post,User
-      WHERE post_id IN ('".$postID."') AND post_id=user_id GROUP BY post_time");
+      WHERE post_id IN ('".$postID."') AND post_id=user_id GROUP BY post_time DESC");
 
     return $getPost;
   }
@@ -137,8 +137,8 @@ include "../php/header.php";
                     $postPhotoSize=postPhotoSize($getPostFetch["post_id"],$getPostFetch["id"]);
                     if($postPhotoSize>0){
                       echo '<ul class="enlarge">';
-                      echo '<img src="../php/newsFeedPostPhoto.php?userID='.$getPostFetch["post_id"].'&photoID='.$getPostFetch["id"].'" style="width:250px">';
-                      echo '<span><img src="../php/newsFeedPostPhoto.php?userID='.$getPostFetch["post_id"].'&photoID='.$getPostFetch["id"].'">';
+                      echo '<img src="../php/newsFeedPostPhoto.php?userID='.$getPostFetch["post_id"].'&photoID='.$getPostFetch["id"].'" style="width:250px" alt="' . $getPostFetch["id"] . '">';
+                      echo '<span><img src="../php/newsFeedPostPhoto.php?userID='.$getPostFetch["post_id"].'&photoID='.$getPostFetch["id"].'" alt="' . $getPostFetch["id"] . '">';
                       echo "<br/>" . $getPostFetch["post_comment"] . "</span>";
                       echo '</ul>';
                     }
