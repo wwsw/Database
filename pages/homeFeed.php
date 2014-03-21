@@ -10,7 +10,8 @@ include "../php/header.php";
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap -->
     <link href="../css/bootstrap.css" rel="stylesheet">
-    <link href="../css/homeFeedStyle.css" rel="stylesheet"> 
+    <link href="../css/feedStyle.css" rel="stylesheet"> 
+    <link href="../css/imgPop.css" rel="stylesheet">     
     <script type='text/javascript' src='../js/bootstrap.min.js'></script>
     <script type='text/javascript' src='../js/statusUpdate.js'></script>
     
@@ -22,12 +23,13 @@ include "../php/header.php";
   <form method="post" action="../php/postUpdate.php" name="updatePost" enctype="multipart/form-data">
     <!-- The border of the post field-->
     <div id="statusBorder">
-
+      <h3>&nbsp &nbsp &nbsp Say Hellooooooo!</h3>
       <!-- The post field including comment filed, upload button and submit button-->
       <div id="comment">
         <!-- The comment filed-->
         <div>
-          <textarea rows="10" name="post_comment" id="comment" placeholder="Comment" required></textarea>
+          <h3></h3>
+          <textarea rows="10" name="post_comment" id="comment" placeholder="Say Hellooooooo! to your friends!" required></textarea>
         </div>
         <!-- The upload button-->
         <div class="file">
@@ -63,14 +65,14 @@ include "../php/header.php";
 
   function getPost($postID){
 
-    $getPost=mysql_query("SELECT post_id,post_time,post_photo,post_comment,user_firstname,user_surname FROM Post,User
+    $getPost=mysql_query("SELECT id,post_id,post_time,post_photo,post_comment,user_firstname,user_surname FROM Post,User
       WHERE post_id IN ('".$postID."') AND post_id=user_id GROUP BY post_time");
 
     return $getPost;
   }
 
   include "../php/connection.php";
-  include "../php/profilePhotoSize.php";
+  include "../php/photoSize.php";
   include "../php/usersFriend.php";
 
   // getMyFriendID() is including in php/usersFriend.php
@@ -78,6 +80,9 @@ include "../php/header.php";
 
   // For calculating how many post for one specific user.
   $friendPostID=array();
+
+  // For seeing the user's post in home feed.
+  $friendPostID[]=$_SESSION["user_id"];
 
   while($myFriendIDFetch=mysql_fetch_array($myFriendID)){
 
@@ -93,22 +98,20 @@ include "../php/header.php";
   //Call the get post function.
   $getPost=getPost($postID);
 
-  echo "<div style='margin-left:37ex;'>";
+  echo "<div class='homeFeed' style='margin-left:308px;'>";
     while($getPostFetch=mysql_fetch_array($getPost)){
     
       // photoSize() is including in php/profilePhotoSize.php
-      $photoSize=photoSize($getPostFetch["post_id"]);
-
-      $_SESSION["post_id"]=$getPostFetch["post_id"];
-      $_SESSION["post_time"]=$getPostFetch["post_time"];
+      $userPhotoSize=userPhotoSize($getPostFetch["post_id"]);
 
       echo '<div id="newsFeedBlock">';
         echo '<div style="text-align: -webkit-left;">';
         
           // The div for user_photo
           echo '<div class="user_photo">';
-            if($photoSize>0){
-              echo '<img src="../php/newsFeedUserPhoto.php?name=$getPostFetch[post_id]" style="width:50px;">';
+            if($userPhotoSize>0){
+              //echo '<img src="../php/newsFeedUserPhoto.php?name=$getPostFetch[post_id]" style="width:50px;">';
+              echo "<img src='../php/profilePhoto.php?id=".$getPostFetch["post_id"]."' style='width:50px;'>";
             }
             else{
               echo '<img src="../img/profileimg.png" style="width:50px;">';
@@ -130,7 +133,16 @@ include "../php/header.php";
 
                   // The div for the post photo
                   echo '<div class="post_photo">';
-                    echo '<img src="../php/newsFeedPostPhoto.php">';
+
+                    $postPhotoSize=postPhotoSize($getPostFetch["post_id"],$getPostFetch["id"]);
+                    if($postPhotoSize>0){
+                      echo '<ul class="enlarge">';
+                      echo '<img src="../php/newsFeedPostPhoto.php?userID='.$getPostFetch["post_id"].'&photoID='.$getPostFetch["id"].'" style="width:250px">';
+                      echo '<span><img src="../php/newsFeedPostPhoto.php?userID='.$getPostFetch["post_id"].'&photoID='.$getPostFetch["id"].'">';
+                      echo "<br/>" . $getPostFetch["post_comment"] . "</span>";
+                      echo '</ul>';
+                    }
+
                   echo '</div>';
 
                 // The div for the post comment

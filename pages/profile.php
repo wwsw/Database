@@ -48,10 +48,10 @@
       echo '<tr>';
         echo '<td>';
 
-        $photoSize=photoSize($_SESSION["user_id"]);
+        $userPhotoSize=userPhotoSize($_SESSION["user_id"]);
 
-         if($photoSize>0){
-           echo '<center><img src="../php/userPhoto.php" style="padding: 10px;" width=150px></center>';
+         if($userPhotoSize>0){
+           echo "<center><img src='../php/profilePhoto.php?id=".$_SESSION["user_id"]."' style='width:150px; padding:10px;'></center>";
          }
          else{
            echo '<center><img src="../img/profileimg.png" style="padding: 10px;" width=150px></center>';
@@ -122,7 +122,7 @@
 
 
             $getPost=getPost();
-            $photoSize=photoSize($_SESSION["user_id"]);
+            $userPhotoSize=userPhotoSize($_SESSION["user_id"]);
             echo "<div class='userProfile' style='margin-left:20ex; margin-top:-30px'>";
             while($getPostFetch=mysql_fetch_array($getPost)){
 
@@ -132,10 +132,10 @@
                 
                   // The div for user_photo
                   echo '<div class="user_photo">';
-                    if($photoSize>0){
+                    if($userPhotoSize>0){
 
-                     echo "<img src='../php/userPhoto.php' style='width:50px;'>";
-                     //echo "<img src='../php/newsFeedPostPhoto.php?name=".$a."' style='width:50px;'>";
+                     echo "<img src='../php/profilePhoto.php?id=".$_SESSION["user_id"]."' style='width:50px;'>";
+      
                     }
                     else{
                       echo '<img src="../img/profileimg.png" style="width:50px;">';
@@ -158,8 +158,13 @@
 
                           // The div for the post photo
                           echo '<div class="post_photo">';
-                            $getID=$getPostFetch["id"];
-                            echo '<img src="../php/newsFeedPostPhoto.php?id='.$getID.'" style="width:250px">';
+                            $photoID=$getPostFetch["id"];
+
+                            $postPhotoSize=postPhotoSize($_SESSION["user_id"],$photoID);
+                            // If the photo size is bigger than 0, which means there is a photo in the database.
+                            if($postPhotoSize>0){
+                              echo '<img src="../php/newsFeedPostPhoto.php?userID='.$_SESSION["user_id"].'&photoID='.$photoID.'" style="width:250px">';
+                            }
                           echo '</div>';
 
                         // The div for the post comment
@@ -316,7 +321,7 @@ include "../php/header.php";
         <!-- Bootstrap -->
   <link href="../css/bootstrap.css" rel="stylesheet">
   <link href="../css/friendProfilePage.css" rel="stylesheet">
-  <link href="../css/homeFeedStyle.css" rel="stylesheet"> 
+  <link href="../css/feedStyle.css" rel="stylesheet"> 
   <link href="../css/popupWindow.css" rel="stylesheet"> 
   <script type='text/javascript' src='../js/bootstrap.min.js'></script>
   <title>Hellooooooo!</title>
@@ -326,7 +331,7 @@ include "../php/header.php";
 
 <?php
   include "../php/connection.php";
-  include "../php/profilePhotoSize.php";
+  include "../php/photoSize.php";
   $postOrNot=postOrNot();
   if(mysql_num_rows($postOrNot)>0){
     friendPopupWindow();

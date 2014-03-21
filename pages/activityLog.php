@@ -1,4 +1,10 @@
-<!DOCTYPE html>
+<?php
+if(!isset($_SESSION)){
+    session_start();
+}
+  include "../php/connection.php";
+?>
+
 <html lang="en">
   <head>
 
@@ -27,28 +33,46 @@ include "../php/header.php";
     margin-left: 10%;
     margin-right: 10%;
     margin-bottom: 20px;
+    padding-top: 10px;
   }
 
 </style>
 
 <div class="page" data-role="page">
 
+  <h3 style="margin-left: 10%;">Activity Log</h3>
+
 <div id="activitylog">
   <center>
   <table>
 
   <?php
-    $addedFriend = array("Hello", "Sam", "Amanda", "Leo", "Wendy", "Alice", "Name", "Another Name", "More names", "Another Name", "Name Name");
-    $countAddFriend = count($addedFriend);
-    # Not used here in example: but in order of date
-    $date = array("Day 1", "Day 2", "Day 3");
+    function friendAdd() {
+      include "../php/connection.php";
+      $friend = mysql_query("SELECT user_id, user_firstname, user_surname FROM User WHERE user_id IN (SELECT friend FROM friend WHERE user = $_SESSION[user_id])") or die("<p>Could not fetch activity.</p>");
+        $arrayFriend = array();
+        while ($friendFetch = mysql_fetch_array($friend)) {
+            array_push($arrayFriend, $friendFetch);
+        }
+       return $arrayFriend;
+    }
 
-    for ($i=0; $i < $countAddFriend; $i++) { 
+    $friendAdd = friendAdd();
+
+    # Not used here in example: but in order of date
+    $date = "2014-03-21 14:42:43";
+
+    if (count($friendAdd) == 0) {
+      echo "You have no friend activities to show.";
+    } else {
+
+    foreach ($friendAdd AS $i) { 
       echo "<tr><td>";
-      echo "You became friends with " . $addedFriend[$i] . ".<br>";
-      echo "<font color='gray'><p style='text-align: right;'>" . "Day " . $i . "</p></font><p>";
+      echo "You became friends with " . $i["user_firstname"] . " " . $i["user_surname"] . ".<br>";
+      echo "<font color='gray' size='1'><p style='text-align: right;'>" . "Day " . $date . "</p></font><p>";
       echo "<hr></td></tr>";
     }
+  }
 
   ?>
 

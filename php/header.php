@@ -62,7 +62,7 @@ if(!isset($_SESSION)){
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="friendslist.php">Your Friends</a></li>
+            <li><a href="profile.php#popupWindow">Your Friends</a></li>
             <li><a href="photos.php">Your Photos</a></li>
             <li><a href="circles.php">Your Circles</a></li>
             <li class="divider"></li>

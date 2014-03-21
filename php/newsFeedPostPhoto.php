@@ -5,10 +5,11 @@
 
 	include "connection.php";
 
-	$id=$_GET["id"];
-
+	$photoID=$_GET["photoID"];
+	$userID=$_GET["userID"];
+	
 		$image=mysql_query("SELECT id,post_photo FROM Post
-			WHERE post_id=$_SESSION[user_id] AND id=$id");
+			WHERE post_id=$userID AND id=$photoID");
 
 		$imageFetch=mysql_fetch_array($image);
 

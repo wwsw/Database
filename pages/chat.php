@@ -37,7 +37,7 @@ include "../php/header.php";
     <link href="../css/chat.css" rel="stylesheet">
     <link href="../css/bootstrap.css" rel="stylesheet">
 
-    <title>Hellooooooo! - Circles</title>
+    <title>Hellooooooo! - Inbox</title>
 
   </head>
   <body>
@@ -115,7 +115,7 @@ include "../php/header.php";
 
     function uniqueFetch(){
       include "../php/connection.php";
-      $unique = mysql_query("SELECT user_id,user_firstname, user_surname FROM User WHERE user_id IN(SELECT DISTINCT sender FROM Message WHERE receiver = $_SESSION[user_id] AND user_id NOT IN(SELECT sender FROM Message WHERE sender =$_SESSION[user_id]))") or die("<p>UniqueID fetch failed.</p>");
+      $unique = mysql_query("SELECT user_id,user_firstname, user_surname FROM User WHERE user_id IN(SELECT DISTINCT sender FROM Message WHERE receiver = $_SESSION[user_id] AND user_id NOT IN(SELECT sender FROM Message WHERE sender =$_SESSION[user_id]))") or die("<p>No conversations to display.</p>");
         $arrayUnique = array();
         while ($uniqueFetch = mysql_fetch_array($unique)) {
             array_push($arrayUnique, $uniqueFetch);
@@ -125,14 +125,19 @@ include "../php/header.php";
 
       $uniqueFetch = uniqueFetch();
 
+      if (count($uniqueFetch) == 0) {
+        echo "You have no conversations to display.";
+      } else {
+
       $tdtrOpen = "<tr><td>";
       $tdtrClose = "<hr></td></tr>";
-      $image = "<img src='../img/profileimg.png' width=20%/>";
+      $image = "<img src='../img/profileimg.png' width=20% style='padding-right: 2px;'/>";
       $link = "<a href='chat.php?name=";
 
       foreach ($uniqueFetch as $i) {
          echo $tdtrOpen . $image . $link . $i["user_id"] . "'>" . $i["user_firstname"] . " " . $i["user_surname"] . "</a>" . $tdtrClose;
       }
+    }
     ?>
 
   </table>
@@ -147,28 +152,26 @@ include "../php/header.php";
 
       function friendFetch(){
         include "../php/connection.php";
-
-        $friend = mysql_query("SELECT user_id, user_firstname, user_surname FROM User
-          WHERE user_id = $_SESSION[receiver]") or die("<p>Friend fetch failed.</p>");
-          $friendFetch = mysql_fetch_array($friend);
-         
-         return $friendFetch;
+        $friend = mysql_query("SELECT user_id, user_firstname, user_surname FROM User WHERE user_id IN (SELECT friend FROM friend WHERE user = $_SESSION[user_id])") or die("<p>Could not fetch activity.</p>");
+          $arrayFriend = array();
+          while ($friendFetch = mysql_fetch_array($friend)) {
+              array_push($arrayFriend, $friendFetch);
+          }
+         return $arrayFriend;
       }
 
       $friendFetch = friendFetch();
 
-      $friendCount = count($friendFetch["user_id"]);
+      foreach ($friendFetch AS $i) {
+        echo "<tr><td>";
+        echo "<a href='chat.php?name=" . $i["user_id"] . "'>" . $i["user_firstname"] . " " . $i["user_surname"] . "</a><hr>";
+        echo "</td></tr>";
+      }
     
 
-        $a = 3;
-        echo "<tr><td>";
-        echo "<a href='chat.php?name=" . $a . "'>David Johnson [MANUAL]</a><hr>";
-        echo "</td></tr>";
 
         ### Current selected friend ###
-        echo "<tr><td>";
-        echo "<a href='chat.php?name=" . $friendFetch["user_id"] . "'>" . $friendFetch["user_firstname"] . " " . $friendFetch["user_surname"] . "</a><hr>";
-        echo "</td></tr>";
+
 
         // $a = 6;
         // echo "<tr><td>";
@@ -189,7 +192,19 @@ include "../php/header.php";
 
       <?php 
 
-      echo "<h4><p style='text-align: right; padding-right: 7px;'><a href='friendProfilePage.php?name=" . $friendFetch["user_id"] . "'>" . $friendFetch["user_firstname"] . " " . $friendFetch["user_surname"] . "</a><p></h4><hr>";
+       function currentChat(){
+        include "../php/connection.php";
+
+        $friend = mysql_query("SELECT user_id, user_firstname, user_surname FROM User
+          WHERE user_id = $_SESSION[receiver]") or die("<p>Friend fetch failed.</p>");
+          $friendFetch = mysql_fetch_array($friend);
+         
+         return $friendFetch;
+      }
+
+  $currentChat = currentChat();
+
+      echo "<h4><p style='text-align: right; padding-right: 7px;'><a href='friendProfilePage.php?name=" . $currentChat["user_id"] . "'>" . $currentChat["user_firstname"] . " " . $currentChat["user_surname"] . "</a><p></h4><hr>";
       ?>
 
 <form role="search" method="post" action="../php/searchContent.php" style="margin-left: 5px">
@@ -230,16 +245,10 @@ include "../php/header.php";
        ### RECEIVER = left ###
        if ($j["sender"] == $friendID) {
         #echo $j["message"]; ###css first
-        echo '<li id="receiver">';
-        echo $j["message"];
-        echo "<p style='text-align: right; font-size: 10px; font-color: 'gray';>" . $j["date"] . "</p>";
-        echo "</li>";
+        echo '<li id="receiver">' . $j["message"] . "<p style='text-align: right; font-size: 10px; font-color: 'gray';>" . $j["date"] . "</p>" . "</li>";
        
        } else {
-        echo "<li id='sender'>";
-        echo $j["message"];
-        echo "<p style='text-align: right; font-size: 10px; font-color: 'gray';>" . $j["date"] . "</p>";        
-        echo "</li>";
+        echo "<li id='sender'>" . $j["message"] . "<p style='text-align: right; font-size: 10px; font-color: 'gray';>" . $j["date"] . "</p>" . "</li>";
        }
     
       }
@@ -257,10 +266,8 @@ include "../php/header.php";
 </div>
 
 
-
-
-<center><form class="chat-window" onsubmit="getMessages(); return false;">
-  <input id="messageBox" class="chat-window-message" onSubmit="location.reload()" name="chat-window-message" type="text" autocomplete="off" placeholder="type your message here..." autofocus />
+<center><form class="chat-window" onsubmit="getMessages(); return false; ">
+  <input id="messageBox" class="chat-window-message" name="chat-window-message" type="text" autocomplete="off" placeholder="type your message here..." autofocus />
 </form></center>
 </div>
 
