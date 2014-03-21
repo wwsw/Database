@@ -6,8 +6,8 @@ if(!isset($_SESSION)){
 	include "connection.php";
 
 	$circleUpdate=mysql_query("UPDATE Friend SET circle='$_POST[circle]'
-		WHERE (user=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]')
-		AND friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]'))")
+		WHERE (user=$_SESSION[user_id]
+		AND friend=$_SESSION[friend_id])")
 		or die("Circle update failed");
 
 	if($circleUpdate){

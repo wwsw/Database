@@ -28,7 +28,7 @@ include "../php/header.php";
       <div id="comment">
         <!-- The comment filed-->
         <div>
-          <textarea rows="10" name="post_comment" id="comment" placeholder="Comment"></textarea>
+          <textarea rows="10" name="post_comment" id="comment" placeholder="Comment" required></textarea>
         </div>
         <!-- The upload button-->
         <div class="file">

@@ -8,21 +8,12 @@ if(!isset($_SESSION)){
 	echo $message;
 
 	$sendMessage=mysql_query("INSERT INTO Message(sender,receiver, date, message)
-		VALUES (
-
-			(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_id]'),
-			(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_id]'),
-			now(),
-			'$message'
-
-			#(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]'),
-			#(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]')
-			)");
+		VALUES ('$_SESSION[user_id]','$_SESSION[receiver]',now(),'$message')");
 
 	if($sendMessage){
 	}
 	else{
-		echo "Friend request failed";
+		echo "Messagev send failed";
 	}
 
 	mysql_close();

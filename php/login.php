@@ -27,7 +27,13 @@ if(!isset($_SESSION)){
 			
        	if($passwordFetch){
 
-       		$_SESSION["user_email"]=$emailFetch["user_email"];
+       		//$_SESSION["user_email"]=$emailFetch["user_email"];
+
+       		// user_id store in the session.
+       		$ID=mysql_query("SELECT user_id FROM Account WHERE user_email='$emailFetch[user_email]'");
+       		$IDFetch=mysql_fetch_array($ID);
+       		$_SESSION["user_id"]=$IDFetch["user_id"];
+       		
        		//setcookie("login",$emailCheck["user_email"],time()+(60*60*24*30));
        		echo "<script>homeFeedPage();</script>"; 			
         }

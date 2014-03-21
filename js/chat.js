@@ -152,3 +152,7 @@ function handleSendChannelStateChange () {
 function handleReceiveChannelStateChange () {
     var readyState = receiveChannel.readyState;
 } 
+
+$("#chat-").animate({
+  scrollTop: $('#chat-thread')[0].scrollHeight - $('#chat-thread')[0].clientHeight
+}, 1000);

@@ -2,29 +2,12 @@
 if(!isset($_SESSION)){
     session_start();
 }
-?>
 
-<script type="text/javascript">
-	function passwordIdentification(){
-		alert("Please check it again!\nThe passwords you have typed are not identical!");
-	}
-
-	function accountExistence(){
-		alert("This email has been registered!");
-	}
-
-	function profilePage(){
-		window.location.href = "../pages/registerProfile.php";
-	}
-</script>
-
-<?php
 	include "connection.php";
 
 	$email=mysql_query("SELECT user_email FROM Account WHERE user_email='$_POST[email]'");
 	$emailCheck=mysql_fetch_array($email);
 
-	// $newUser=getUser();
 	if(!$emailCheck){
 
 		if($_POST["password1"]==$_POST["password2"]){	
@@ -37,37 +20,29 @@ if(!isset($_SESSION)){
 			$accountInsertion=mysql_query("INSERT INTO Account(user_email,user_password,user_id)
 				VALUES (trim('$_POST[email]'),md5('$_POST[password1]'),'$getInsertID')");
 
-			$_SESSION["user_email"]=trim($_POST["email"]);
+			//$_SESSION["user_email"]=trim($_POST["email"]);
+
+			// user_id store in the session.
+       		$_SESSION["user_id"]=$getInsertID;
+
 
 			if($userInsertion&&$accountInsertion){
 
-				echo "<script>profilePage();</script>";
+				echo "<script>window.location.href = '../pages/registerProfile.php';</script>";
 			}
 			else{
 				echo "Insertion failed";
 			}
 		}
 		else{
-			echo "<script>passwordIdentification();history.back();</script>";
+			$message="The passwords you have typed are not identical!";
+			echo "<script>alert('".$message."');history.back();</script>";
 		}
 	}
 	else{
-		echo "<script>accountExistence();history.back();</script>";
+		$message="This email has been registered!";
+		echo "<script>alert('".$message."');history.back();</script>";
 	}
-	
-	// function getUser(){
-	// 	$user=array();
-	// 	$user["email"]=$_POST["email"];
-	// 	$user["password1"]=$_POST["password1"];
-	// 	$user["password2"]=$_POST["password2"];
-	// 	$user["firstname"]=$_POST["firstname"];
-	// 	$user["surname"]=$_POST["surname"];
-	// 	$user["gender"]=$_POST["gender"];
-	// 	$user["age"]=$_POST["age"];
-	// 	$user["study"]=$_POST["study"];
-	// 	$user["work"]=$_POST["work"];
-	// 	return $user;
-	// }
 
 	mysql_close();
 ?>

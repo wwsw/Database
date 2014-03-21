@@ -2,30 +2,35 @@
 	if(!isset($_SESSION)) {
 		session_start();
 	}
+	function updateProfile(){
+		$profileUpdate=mysql_query("UPDATE User
+			SET user_firstname=trim('$_POST[firstname]'),user_surname=trim('$_POST[surname]'),
+			user_gender='$_POST[gender]',user_study=trim('$_POST[study]'),user_work=trim('$_POST[work]')
+			WHERE user_id=$_SESSION[user_id]")
+			or die("Update failed");
+	}
 
 	function update(){
 
 		if(!empty($_POST["year"]) && !empty($_POST["month"]) && !empty($_POST["day"])){
 
-			$birthdayUpdate=mysql_query("UPDATE User,Account
+			$birthdayUpdate=mysql_query("UPDATE User
 			SET user_birthday='$_POST[year]-$_POST[month]-$_POST[day]'
-			WHERE user_email='$_SESSION[user_email]' AND Account.user_id=User.user_id")
+			WHERE user_id=$_SESSION[user_id]")
 			or die("Birthday update failed");
+
+			updateProfile();
 		
 		}
 		else{
-			$profileUpdate=mysql_query("UPDATE User,Account
-			SET user_firstname=trim('$_POST[firstname]'),user_surname=trim('$_POST[surname]'),
-			user_gender='$_POST[gender]',user_study=trim('$_POST[study]'),user_work=trim('$_POST[work]')
-			WHERE user_email='$_SESSION[user_email]' AND Account.user_id=User.user_id")
-			or die("Update failed");
+			updateProfile();
 		}
 
 	}
 	function updatePassword(){
 		$passwordUpdate=mysql_query("UPDATE Account 
 			SET user_password=md5('$_POST[password1]')
-			WHERE user_email='$_SESSION[user_email]'")
+			WHERE user_id=$_SESSION[user_id]")
 			or die("Password update failed");
 	}
 
@@ -44,7 +49,7 @@
 			else{
 				$photoUpload=mysql_query("UPDATE User 
 					SET user_photo='$photo'
-					WHERE user_id=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]')")
+					WHERE user_id=$_SESSION[user_id]")
 					or die("Problem uploading");
 
 				return $photoUpload;

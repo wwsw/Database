@@ -6,10 +6,7 @@ if(!isset($_SESSION)){
 	include "connection.php";
 
 	$userRequest=mysql_query("INSERT INTO Friend(user,friend)
-		VALUES (
-			(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]'),
-			(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]')
-			)");
+		VALUES ('$_SESSION[user_id]','$_SESSION[friend_id]')");
 
 	if($userRequest){
 		echo "<script>history.back();</script>";

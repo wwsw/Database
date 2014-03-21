@@ -6,10 +6,10 @@ if(!isset($_SESSION)){
 		include "connection.php";
 
 		$friendDelete=mysql_query("DELETE FROM Friend
-			WHERE (user=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]')
-			AND friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]'))
-		OR (user=(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]')
-			AND friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]'))");
+			WHERE (user=$_SESSION[user_id]
+			AND friend=$_SESSION[friend_id])
+		OR (user=$_SESSION[friend_id]
+			AND friend=$_SESSION[user_id])");
 
 		if($friendDelete){
 			echo "<script>history.back();</script>";

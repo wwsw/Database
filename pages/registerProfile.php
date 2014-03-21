@@ -27,8 +27,7 @@ include "../php/registerHeader.php";
 
 <p>
     <!--TODO change when creating new edit profile page-->
-	<form method="post" action="../php/profileUpdate.php" name="registration">
-
+    <form method="post" action="../php/registerProfileUpdate.php" enctype="multipart/form-data">
 	<h3 style="text-align:center;"><font color="gray">2. Create Profile</font></h3> <p>
 
     <!--label style="display:block;text-align:center">First name:</label-->

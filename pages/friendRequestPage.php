@@ -5,8 +5,8 @@ if(!isset($_SESSION)){
 
     function getFriendRequest($requestID){
 
-	    $request=mysql_query("SELECT user_firstname,user_surname,user_study,user_work,user_email FROM user,Account
-	      WHERE User.user_id=Account.user_id AND User.user_id=$requestID");
+	    $request=mysql_query("SELECT user_id,user_firstname,user_surname,user_study,user_work FROM user
+	      WHERE user_id=$requestID");
 
 	    $requestFetch=mysql_fetch_array($request);
 
@@ -39,8 +39,8 @@ include "../php/header.php";
 		include "../php/connection.php";
 
 	 	$friendRequestID=mysql_query("SELECT user FROM Friend
-          WHERE friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]')
-          AND user NOT IN (SELECT friend FROM Friend WHERE user=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]'))");
+          WHERE friend=$_SESSION[user_id]
+          AND user NOT IN (SELECT friend FROM Friend WHERE user=$_SESSION[user_id])");
 
 		while($friendRequestIDFetch=mysql_fetch_array($friendRequestID)){
 			$display=getFriendRequest($friendRequestIDFetch["user"]);
@@ -49,10 +49,10 @@ include "../php/header.php";
 			  echo "<div class='profile-box'>";
     	      echo "<div id='box-displaypic'><img src='../img/profileimg.png' width=90px></div>";
               echo "<div id='box-text'>";
-              echo ("<a href='friendProfilePage.php?name=".$display['user_email']."'>".$display['user_firstname']." ".$display['user_surname']."</a><br>");
+              echo ("<a href='friendProfilePage.php?name=".$display['user_id']."'>".$display['user_firstname']." ".$display['user_surname']."</a><br>");
               echo "$display[user_work]<br>";
               echo "$display[user_study]<br>";
-              echo "<a href='friendProfilePage.php?name=".$display['user_email']."'><button class='btn' id='box-button' type='button'>View Profile!</button></a>";
+              echo "<a href='friendProfilePage.php?name=".$display['user_id']."'><button class='btn' id='box-button' type='button'>Go to Profile!</button></a>";
               echo "</div></div>";
               echo "</div>";
 		}

@@ -9,7 +9,7 @@
       echo '<tr id="username">';
         echo '<th>';
 
-          echo "$userProfileFetch[user_firstname] $userProfileFetch[user_surname]";
+          echo "&nbsp; $userProfileFetch[user_firstname] $userProfileFetch[user_surname]";
 
         echo '</th>';
       echo '</tr>';
@@ -18,7 +18,7 @@
         echo '<td>';
         include "../php/profilePhotoSize.php";
 
-        $photoSize=photoSize($_SESSION["user_email"]);
+        $photoSize=photoSize($_SESSION["user_id"]);
 
          if($photoSize>0){
            echo '<center><img src="../php/userPhoto.php" style="padding: 10px;" width=150px></center>';
@@ -32,10 +32,10 @@
       echo '<tr>';
         echo '<td height=250px>';
  
-        echo "$userProfileFetch[user_birthday]</br>";
-        echo "$userProfileFetch[user_gender]</br>";
-        echo "$userProfileFetch[user_study]</br>";
-        echo "$userProfileFetch[user_work]</br>";
+        echo "&nbsp; $userProfileFetch[user_birthday]</br>";
+        echo "&nbsp; $userProfileFetch[user_gender]</br>";
+        echo "&nbsp; $userProfileFetch[user_study]</br>";
+        echo "&nbsp; $userProfileFetch[user_work]</br>";
 
         echo '</td>';
         echo '</tr>';

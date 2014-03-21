@@ -3,16 +3,15 @@ if(!isset($_SESSION)){
     session_start();
 }
 
-  $friendEmail=$_GET['name'];
+  $friendID=$_GET['name'];
 
-  $_SESSION["friend_email"]=$friendEmail;
+  $_SESSION["friend_id"]=$friendID;
 
   /* Get the information of the friends. */
   function friendFetch(){
 
-    $friend=mysql_query("SELECT user_firstname,user_surname,user_birthday,user_gender,user_study,user_work,user_email FROM User,Account
-          WHERE User.user_id=(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]')
-          AND user_email='$_SESSION[friend_email]'") or die("<p>Friend fetch failed.</p>");
+    $friend=mysql_query("SELECT user_firstname,user_surname,user_birthday,user_gender,user_study,user_work FROM User
+          WHERE user_id=$_SESSION[friend_id]") or die("<p>Friend fetch failed.</p>");
 
     $friendFetch=mysql_fetch_array($friend);
 
@@ -23,10 +22,10 @@ if(!isset($_SESSION)){
   function relation(){
 
     $relation=mysql_query("SELECT user,friend FROM Friend
-        WHERE (user=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]')
-        AND friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]'))
-        OR (user=(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]')
-        AND friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]'))") ;
+        WHERE (user=$_SESSION[user_id]
+        AND friend=$_SESSION[friend_id])
+        OR (user=$_SESSION[friend_id]
+        AND friend=$_SESSION[user_id])") ;
 
     $relationNum=mysql_num_rows($relation);
 
@@ -37,8 +36,8 @@ if(!isset($_SESSION)){
   function userRequestFetch(){
 
     $userRequest=mysql_query("SELECT user,friend FROM Friend
-              WHERE user=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]')
-              AND friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]')");
+              WHERE user=$_SESSION[user_id]
+              AND friend=$_SESSION[friend_id]");
 
       $userRequestFetch=mysql_fetch_array($userRequest);
 
@@ -49,22 +48,22 @@ if(!isset($_SESSION)){
   function friendRequestFetch(){
 
       $friendRequest=mysql_query("SELECT user,friend FROM Friend
-                WHERE user=(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]')
-                AND friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]')");
+                WHERE user=$_SESSION[friend_id]
+                AND friend=$_SESSION[user_id]");
 
       $friendRequestFetch=mysql_fetch_array($friendRequest);
 
       return $friendRequestFetch;;
   }
 
-  function echoBlock($num,$firstname,$surname,$work,$study,$email,$br){
+  function echoBlock($num,$firstname,$surname,$work,$study,$ID,$br){
 
     echo "<div class='profile-box'>";
     echo "<div id='box-displaypic'><img src='../img/profileimg.png' width=90px></div>";
     echo "<div id='box-text'>";
-    echo "<a href='friendProfilePage.php?name=".$email[$num]."'>". $firstname[$num]. " " . $surname[$num] . "</a><br>";
+    echo "<a href='friendProfilePage.php?name=".$ID[$num]."'>". $firstname[$num]. " " . $surname[$num] . "</a><br>";
     echo $work[$num] . $br . $study[$num] . $br;
-    echo "<a href='friendProfilePage.php?name=".$email[$num]."'><button class='btn' id='box-button' type='button' name='Accept'>View Profile</button></a>";
+    echo "<a href='friendProfilePage.php?name=".$ID[$num]."'><button class='btn' id='box-button' type='button' name='Accept'>View Profile</button></a>";
     echo "</div></div>";
 
   }
@@ -82,12 +81,12 @@ if(!isset($_SESSION)){
 
     $view=mysql_query("CREATE VIEW FriendsFriend AS
       SELECT user AS id FROM Friend WHERE
-      (friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]')
-        AND NOT user=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]'))
+      (friend=$_SESSION[friend_id]
+        AND NOT user=$_SESSION[user_id])
       UNION ALL
       SELECT friend AS id FROM Friend WHERE 
-      (user=(SELECT user_id FROM Account WHERE user_email='$_SESSION[friend_email]')
-        AND NOT friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]'))")
+      (user=$_SESSION[friend_id]
+        AND NOT friend=$_SESSION[user_id])")
       or die("Your friend is a hermit!");
       
     return $view;
@@ -96,8 +95,8 @@ if(!isset($_SESSION)){
   /* Get the information of the friend's/user's friends. */
   function getFriendsFriend($friendsFriendID){
 
-    $friendsFriend=mysql_query("SELECT user_firstname,user_surname,user_study,user_work,user_email FROM user,Account
-      WHERE User.user_id=Account.user_id AND User.user_id=$friendsFriendID") or die("Friend's friend fetch failed.");
+    $friendsFriend=mysql_query("SELECT user_id,user_firstname,user_surname,user_study,user_work FROM user
+      WHERE user_id=$friendsFriendID") or die("Friend's friend fetch failed.");
 
     $friendsFriendFetch=mysql_fetch_array($friendsFriend);
 
@@ -126,7 +125,7 @@ if(!isset($_SESSION)){
               $surname=array();
               $work=array();
               $study=array();
-              $email=array();
+              $ID=array();
 
             while($friendsFriendIDFetch=mysql_fetch_array($friendsFriendID)){
 
@@ -138,14 +137,14 @@ if(!isset($_SESSION)){
                 $surname[]=$display["user_surname"];
                 $work[]=$display["user_work"];
                 $study[]=$display["user_study"];
-                $email[]=$display["user_email"];
+                $ID[]=$display["user_id"];
               }
             }
                 
                 echo '<div id="friend-result-list">';
                 echo '<table>';
 
-                $frndtotal = count($email);
+                $frndtotal = count($ID);
                 $br = "<br>";
                 
                 #if greater than 0, and odd number
@@ -155,19 +154,19 @@ if(!isset($_SESSION)){
 
                     if ($i == $frndtotal) { #if last item
                       echo "<tr><td>";
-                      echoBlock($frndtotal,$firstname,$surname,$work,$study,$email,$br);
+                      echoBlock($frndtotal,$firstname,$surname,$work,$study,$ID,$br);
                       echo '</td></tr>';
 
                     } elseif (($i == 0) || (($i%2) == 0)) {  # if 0 (1st item), even
 
                       echo "<tr>";
                       echo "<td>";
-                      echoBlock($i,$firstname,$surname,$work,$study,$email,$br);
+                      echoBlock($i,$firstname,$surname,$work,$study,$ID,$br);
                       echo '</td>';
 
                     } elseif (($i%2) != 0) { #if even: right side
                       echo "<td>";
-                      echoBlock($i,$firstname,$surname,$work,$study,$email,$br);
+                      echoBlock($i,$firstname,$surname,$work,$study,$ID,$br);
                       echo '</td>';
                       echo "</tr>";
                     }
@@ -182,12 +181,12 @@ if(!isset($_SESSION)){
 
                       echo "<tr>";
                       echo "<td>";
-                      echoBlock($i,$firstname,$surname,$work,$study,$email,$br);
+                      echoBlock($i,$firstname,$surname,$work,$study,$ID,$br);
                       echo '</td>';
 
                     } elseif (($i%2) != 0) { #if even: right side
                       echo "<td>";
-                      echoBlock($i,$firstname,$surname,$work,$study,$email,$br);
+                      echoBlock($i,$firstname,$surname,$work,$study,$ID,$br);
                       echo '</td>';
                       echo "</tr>";
                       }
@@ -220,7 +219,7 @@ if(!isset($_SESSION)){
           echo '<tr id="username">';
             echo '<th>';
 
-                echo "$friendFetch[user_firstname] $friendFetch[user_surname]";
+                echo "&nbsp; $friendFetch[user_firstname] $friendFetch[user_surname]";
 
             echo '</th>';
           echo '</tr>';
@@ -233,17 +232,13 @@ if(!isset($_SESSION)){
           echo '<tr>';
             echo '<td height=250px>';
 
-              echo "$friendFetch[user_birthday]<br>";
-              echo "$friendFetch[user_gender]<br>";
-              echo "$friendFetch[user_work]<br>";
-              echo "$friendFetch[user_study]<br>";
+              echo "&nbsp; $friendFetch[user_birthday]<br>";
+              echo "&nbsp; $friendFetch[user_gender]<br>";
+              echo "&nbsp; $friendFetch[user_work]<br>";
+              echo "&nbsp; $friendFetch[user_study]<br>";
 
               // If they are friends.
               if(relation()==2){
-
-                echo "<form method='post' action='../php/friendDelete.php'>";
-                echo "<button class='btn' id='box-button' type='submit'>Unfriend</button>";
-                echo "</form>";
 
                 // Show the friend's circle.
                 $getCircle=getCircle();
@@ -253,12 +248,19 @@ if(!isset($_SESSION)){
                 $circleSelection=array_values($circleRemove);
                 
                 echo "<form method='post' action='../php/circleUpdate.php'>";
-                echo "<p>Circles: <select name='circle' onchange='this.form.submit()'>";
+                echo "<p>&nbsp; Circles: <select name='circle' onchange='this.form.submit()'>";
                 echo "<option selected>".$getFriendCircle."</option>";
                 echo "<option value='$circleSelection[0]'>$circleSelection[0]</option>";
                 echo "<option value='$circleSelection[1]'>$circleSelection[1]</option>";
                 echo "<option value='$circleSelection[2]'>$circleSelection[2]</option>";
                 echo "</select>";
+                echo "<br>";
+                echo "<br>";
+
+
+                echo "<form method='post' action='../php/friendDelete.php'>";
+                echo "&nbsp; <button class='btn' id='box-button' type='submit'>Unfriend</button>";
+                echo "</form>";
 
               }
               
@@ -333,8 +335,8 @@ if(!isset($_SESSION)){
               if(friendRequestFetch()){
                 echo "<p>$friendFetch[user_firstname] $friendFetch[user_surname] has sent you a request.</p>";
                 echo "<form method='post' action='../php/friendAcceptance.php'>";
-                echo "<button class='btn' id='box-button' type='submit' name='confirm'>Confirm</button>";
-                echo "<button class='btn' id='box-button' type='submit' name='reject'>Reject</button>";
+                echo "<button class='btn' id='box-button' type='submit' name='confirm' style='width:80px'>Confirm</button>&nbsp;";
+                echo "<button class='btn' id='box-button' type='submit' name='reject' style='width:80px'>Reject</button>";
                 echo "</form>";
             }
               else{

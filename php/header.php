@@ -30,8 +30,8 @@ if(!isset($_SESSION)){
         include "connection.php";
 
         $friendRequest=mysql_query("SELECT user FROM Friend
-          WHERE friend=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]')
-          AND user NOT IN (SELECT friend FROM Friend WHERE user=(SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]'))");
+          WHERE friend=$_SESSION[user_id]
+          AND user NOT IN (SELECT friend FROM Friend WHERE user=$_SESSION[user_id])");
 
         $notificationAmount=mysql_num_rows($friendRequest);
 
@@ -66,16 +66,15 @@ if(!isset($_SESSION)){
             <li><a href="photos.php">Your Photos</a></li>
             <li><a href="circles.php">Your Circles</a></li>
             <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li><a href="activityLog.php">Your Activity Log</a></li>
             <li class="divider"></li>
             <li><a href="#">One more separated link</a></li>
           </ul>
         </li>        
 
 
-        <li><a href="messages.php">Messages
+        <li><a href="chat.php">Inbox
           <script type="text/javascript">
-            document.write(notification());
           </script>
         </a></li>
 

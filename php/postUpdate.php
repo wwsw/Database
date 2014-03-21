@@ -7,10 +7,10 @@
 		include "connection.php";
 
 		$post=mysql_query("INSERT INTO Post(post_id,post_time,post_comment,post_photo)
-				VALUES((SELECT user_id FROM Account WHERE user_email='$_SESSION[user_email]'),now(),'$_POST[post_comment]','$post_photo')")
+				VALUES('$_SESSION[user_id]',now(),'$_POST[post_comment]','$post_photo')")
 				or die("Post failed");
 
-		$message="Update successfully";
+		$message="Post successfully";
 		echo "<script type='text/javascript'>alert('".$message."');window.location.href = '../pages/homeFeed.php';</script>";
 
 		mysql_close($connection);
