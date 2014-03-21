@@ -4,12 +4,14 @@ if(!isset($_SESSION)){
 }
 
 
-#if(strpos($_SERVER['REQUEST_URI'],"/pages/chat.php")===0){
-#  echo "<div id='chat-page'>Please select conversation from the left.</div>";
-#} else {
+if(strpos($_SERVER['REQUEST_URI'],"/pages/chat.php?name=0")===0){
+  echo "<style> #chat-page { visibility: hidden; }</style>";
+  echo "<div id='default-box'>Please select a conversation from your inbox.<p> If there are no existing conversations, you can select a friend from the Friends tab.";
+  echo "</div>";
+} else {
   $friendID=$_GET['name'];
   $_SESSION["receiver"]=$friendID; 
-#}
+}
 
   include "../php/connection.php";
 ?>
@@ -43,6 +45,18 @@ include "../php/header.php";
 <style>
   
   #chat-page {
+    background-color: rgba(255, 255, 255, 0.5);
+    margin-left: 30%;
+    margin-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 3px;
+    padding-right: 3px;
+    position: fixed;
+    width: 60%;
+  }
+
+    #default-box {
     background-color: rgba(255, 255, 255, 0.5);
     margin-left: 30%;
     margin-right: 10px;

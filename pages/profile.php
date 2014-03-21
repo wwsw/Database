@@ -1,5 +1,36 @@
 <?php
 
+  if(!isset($_SESSION)){
+      session_start();
+  }
+
+  function postOrNot(){
+    $postOrNot=mysql_query("SELECT post_id FROM Post WHERE post_id=$_SESSION[user_id]");
+
+    return $postOrNot;
+  }
+
+  function getPost(){
+
+    $getPost=mysql_query("SELECT id,post_id,post_time,post_photo,post_comment,user_firstname,user_surname FROM Post,User
+      WHERE post_id=$_SESSION[user_id] AND post_id=user_id GROUP BY post_time");
+
+    return $getPost;
+  }
+
+  /* Echo my friends in each block. */
+  function echoBlock($num,$firstname,$surname,$work,$study,$ID,$br){
+
+    echo "<div class='profile-box'>";
+    echo "<div id='box-displaypic'><img src='../img/profileimg.png' width=90px></div>";
+    echo "<div id='box-text'>";
+    echo "<a href='friendProfilePage.php?name=".$ID[$num]."'>". $firstname[$num]. " " . $surname[$num] . "</a><br>";
+    echo $work[$num] . $br . $study[$num] . $br;
+    echo "<a href='friendProfilePage.php?name=".$ID[$num]."'><button class='btn' id='box-button' type='button' name='Accept'>View Profile</button></a>";
+    echo "</div></div>";
+
+  }
+
   /* The block which displays the user/friend profile page. */
   function echoSideBar(){
     include "../php/userProfile.php";
@@ -16,7 +47,6 @@
 
       echo '<tr>';
         echo '<td>';
-        include "../php/profilePhotoSize.php";
 
         $photoSize=photoSize($_SESSION["user_id"]);
 
@@ -66,25 +96,98 @@
     echo '</div>';
   }
 
+  function echoBlankFeed(){
+    echo '<div id="contentcolumn">';
+      echo '<div id="column-scroll">';
+
+        echo '<div class="innertube" style="height:421px;">';
+          echo '<center>You can share your life with your friends.';
+
+          echo '<div id="profilefeed">';
+          echo '</div>';
+        echo '</div>';
+      echo '</div>';
+  echo '</div>';
+  }
+
     /* Display the feed block when they are friends. */
   function echoFeed(){
     echo '<div id="contentcolumn">';
       echo '<div id="column-scroll">';
 
         echo '<div class="innertube">';
-          echo '<center>This is the profile page.';
-          echo '<a href="editProfile.php">Update personal details.</a></center>';
 
           echo '<div id="profilefeed">';
-            echo '<center>This div will contain the feed of the user.';
+            echo '<center>';
 
-              echo '<script>';
-              echo 'var string = "";';
-                echo 'for (var i = 0; i < 50; i++) {';
-                  echo 'string += "blah blah<p>"';
-                  echo '}';
-                echo 'document.write(string);';
-              echo '</script>';
+
+            $getPost=getPost();
+            $photoSize=photoSize($_SESSION["user_id"]);
+            echo "<div class='userProfile' style='margin-left:20ex; margin-top:-30px'>";
+            while($getPostFetch=mysql_fetch_array($getPost)){
+
+             if($getPostFetch){
+              echo '<div id="newsFeedBlock">';
+                echo '<div style="text-align: -webkit-left;">';
+                
+                  // The div for user_photo
+                  echo '<div class="user_photo">';
+                    if($photoSize>0){
+
+                     echo "<img src='../php/userPhoto.php' style='width:50px;'>";
+                     //echo "<img src='../php/newsFeedPostPhoto.php?name=".$a."' style='width:50px;'>";
+                    }
+                    else{
+                      echo '<img src="../img/profileimg.png" style="width:50px;">';
+
+                    }
+                  echo '</div>';
+
+                  // The div for post details
+                  echo '<div class="post_detail">';
+                    echo '<ul style="list-style:none;">';
+                      // The div for the user's name
+                      echo '<li>';
+                        echo '<div class="user_name">';
+                          echo "<a href='friendProfilePage.php?name=".$getPostFetch["post_id"]."'>". $getPostFetch["user_firstname"]. " " . $getPostFetch["user_surname"] . "</a><br>";
+                        echo '</div>';
+                      echo '</li>';
+
+                      echo '<li style="padding-top:35px;">';
+                        echo '<div class="photoCommentBorder">';
+
+                          // The div for the post photo
+                          echo '<div class="post_photo">';
+                            $getID=$getPostFetch["id"];
+                            echo '<img src="../php/newsFeedPostPhoto.php?id='.$getID.'" style="width:250px">';
+                          echo '</div>';
+
+                        // The div for the post comment
+                          echo '<div class="post_comment">';
+                            echo $getPostFetch["post_comment"];
+                          echo '</div>';
+
+                        echo '</div>';
+                      echo '</li>';
+
+                      // The div for the post time
+                      echo '<li>';
+                        echo '<div class="post_time">';
+                          echo $getPostFetch["post_time"];
+                        echo '</div>';
+                      echo '</li>';
+                    echo '</ul>';
+                  echo '</div>';
+
+                echo '<div>';
+              echo '</div>';
+             }
+             else{
+              echo "Something wrong.";
+             }
+
+            }
+          echo "</div>";
 
             echo '</center>';
           echo '</div>';
@@ -101,7 +204,95 @@
         echo '<div class="closeBar">';
           echo '<a href="javascript:history.back();" title="Close" class="close">X</a>';
         echo '</div>';
+        echo '<div class="contentBlock">';
+
+        include "../php/usersFriend.php";
+        $myFriendID=getMyFriendID();
+
+
+          if(mysql_num_rows($myFriendID)>0){
+
+              $firstname=array();
+              $surname=array();
+              $work=array();
+              $study=array();
+              $ID=array();
+
+            while($myFriendIDFetch=mysql_fetch_array($myFriendID)){
+
+               $display=getMyFriendProfile($myFriendIDFetch["id"]);
+
+                if($display){
+
+                $firstname[]=$display["user_firstname"];
+                $surname[]=$display["user_surname"];
+                $work[]=$display["user_work"];
+                $study[]=$display["user_study"];
+                $ID[]=$display["user_id"];
+              }
+            }
+                echo '<div id="friend-result-list">';
+                echo '<table>';
+
+                $frndtotal = count($ID);
+                $br = "<br>";
+                
+                #if greater than 0, and odd number
+                if (($frndtotal > 0) && (($frndtotal%2) != 0)) {
+                  #up to the max even number
+                  for ($i = 0; $i < $frndtotal; $i++) { 
+
+                    if ($i == $frndtotal) { #if last item
+                      echo "<tr><td>";
+                      echoBlock($frndtotal,$firstname,$surname,$work,$study,$ID,$br);
+                      echo '</td></tr>';
+
+                    } elseif (($i == 0) || (($i%2) == 0)) {  # if 0 (1st item), even
+
+                      echo "<tr>";
+                      echo "<td>";
+                      echoBlock($i,$firstname,$surname,$work,$study,$ID,$br);
+                      echo '</td>';
+
+                    } elseif (($i%2) != 0) { #if even: right side
+                      echo "<td>";
+                      echoBlock($i,$firstname,$surname,$work,$study,$ID,$br);
+                      echo '</td>';
+                      echo "</tr>";
+                    }
+                  
+                  }
+
+                } else {
+
+                    for ($i = 0; $i < $frndtotal; $i++) { 
+
+                      if (($i == 0) || (($i%2) == 0)) {  # if 0 (1st item), even
+
+                      echo "<tr>";
+                      echo "<td>";
+                      echoBlock($i,$firstname,$surname,$work,$study,$ID,$br);
+                      echo '</td>';
+
+                    } elseif (($i%2) != 0) { #if even: right side
+                      echo "<td>";
+                      echoBlock($i,$firstname,$surname,$work,$study,$ID,$br);
+                      echo '</td>';
+                      echo "</tr>";
+                      }
+
+                    }
+
+                  }
+                echo '</table>';
+                echo '</div>';
+          }
+          else{
+            echo "<center><p>No friends to display.</p></center>";
+          }
         
+
+    $dropView=mysql_query("DROP VIEW FriendsFriend");
         echo '</div>';
       echo '</div>';
     echo '</div>';
@@ -125,6 +316,7 @@ include "../php/header.php";
         <!-- Bootstrap -->
   <link href="../css/bootstrap.css" rel="stylesheet">
   <link href="../css/friendProfilePage.css" rel="stylesheet">
+  <link href="../css/homeFeedStyle.css" rel="stylesheet"> 
   <link href="../css/popupWindow.css" rel="stylesheet"> 
   <script type='text/javascript' src='../js/bootstrap.min.js'></script>
   <title>Hellooooooo!</title>
@@ -133,17 +325,33 @@ include "../php/header.php";
 <body>
 
 <?php
+  include "../php/connection.php";
+  include "../php/profilePhotoSize.php";
+  $postOrNot=postOrNot();
+  if(mysql_num_rows($postOrNot)>0){
+    friendPopupWindow();
+    echoNavigationBar();
+    echo '<div class="page" id="maincontainer" data-role="page">';
+    echo '<div id="contentwrapper">';
 
-  echoNavigationBar();
-  echo '<div class="page" id="maincontainer" data-role="page">';
-  echo '<div id="contentwrapper">';
+    echoSideBar();
+    echoFeed();
+    
+    echo '</div>';
+    echo '</div>';
+  }
+  else{
+    friendPopupWindow();
+    echoNavigationBar();
+    echo '<div class="page" id="maincontainer" data-role="page">';
+    echo '<div id="contentwrapper">';
 
-  echoSideBar();
-  echoFeed();
-  friendPopupWindow();
-  echo '</div>';
-  echo '</div>';
-
+    echoSideBar();
+    echoBlankFeed();
+    
+    echo '</div>';
+    echo '</div>';
+  }
 ?>
 </body>
 </html>

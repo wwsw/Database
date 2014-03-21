@@ -379,30 +379,33 @@ include "../php/header.php";
 
 <?php
     include "../php/connection.php";
-
-    if(relation()==2){
-      friendPopupWindow();
-      echoNavigationBar();
-      echo '<div class="page" id="maincontainer" data-role="page">';
-      echo '<div id="contentwrapper">';
-
-      echoSideBar();
-      echoFeed();
-
-      echo '</div>';
-      echo '</div>';
-    }
-    else{
+    if($_SESSION['user_id']!=$_GET['name']){
+      if(relation()==2){
+        friendPopupWindow();
+        echoNavigationBar();
         echo '<div class="page" id="maincontainer" data-role="page">';
         echo '<div id="contentwrapper">';
 
         echoSideBar();
-        echoBlankFeed();
+        echoFeed();
 
         echo '</div>';
         echo '</div>';
+      }
+      else{
+          echo '<div class="page" id="maincontainer" data-role="page">';
+          echo '<div id="contentwrapper">';
+
+          echoSideBar();
+          echoBlankFeed();
+
+          echo '</div>';
+          echo '</div>';
+      }
     }
-
+    else{
+      echo "<script>window.location.href = 'profile.php';</script>";
+    }
 ?>
 
 </body>

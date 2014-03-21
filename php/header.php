@@ -37,10 +37,10 @@ if(!isset($_SESSION)){
 
         ############ NOTIFICATION BADGE ##########
 
-        if ($notificationAmount > 0) {
+        #if ($notificationAmount > 0) {
           
           echo "<span class='badge'>" . $notificationAmount . "</span>";
-        }
+        #}
 
         mysql_close($connection);
         ?>
@@ -73,7 +73,7 @@ if(!isset($_SESSION)){
         </li>        
 
 
-        <li><a href="chat.php">Inbox
+        <li><a href="chat.php?name=0">Inbox
           <script type="text/javascript">
           </script>
         </a></li>
